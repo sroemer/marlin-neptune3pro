@@ -558,7 +558,13 @@ bool DiskIODriver_SPI_SD::waitNotBusy(const millis_t timeout_ms) {
   return true;
 }
 
-void DiskIODriver_SPI_SD::error(const uint8_t code) { errorCode_ = code; }
+void DiskIODriver_SPI_SD::error(const uint8_t code) { 
+    // #if ENABLED(TJC_AVAILABLE)  
+    //   LCD_SERIAL_2.printf("page err_sd");
+    //   LCD_SERIAL_2.printf("\xff\xff\xff");
+    // #endif
+    errorCode_ = code; 
+  }
 
 /**
  * Write a 512 byte block to an SD card.

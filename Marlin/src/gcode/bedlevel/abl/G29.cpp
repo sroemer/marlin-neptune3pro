@@ -59,6 +59,11 @@
 #define DEBUG_OUT ENABLED(DEBUG_LEVELING_FEATURE)
 #include "../../../core/debug_out.h"
 
+#if ENABLED(RTS_AVAILABLE)
+  #include "../../../lcd/extui/dgus/elegoo/DGUSDisplayDef.h"
+  //uint8_t showcount = 0;
+#endif
+
 #if ABL_USES_GRID
   #if ENABLED(PROBE_Y_FIRST)
     #define PR_OUTER_VAR  abl.meshCount.x
@@ -230,6 +235,10 @@ G29_TYPE GcodeSuite::G29() {
 
   // Leveling state is persistent when done manually with multiple G29 commands
   TERN_(PROBE_MANUALLY, static) G29_State abl;
+
+  #if ENABLED(RTS_AVAILABLE)
+    showcount=0;
+  #endif
 
   // Keep powered steppers from timing out
   reset_stepper_timeout();
@@ -442,13 +451,25 @@ G29_TYPE GcodeSuite::G29() {
       remember_feedrate_scaling_off();
 
       #if ENABLED(PREHEAT_BEFORE_LEVELING)
-        if (!abl.dryrun) probe.preheat_for_probing(LEVELING_NOZZLE_TEMP,
-          #if BOTH(DWIN_LCD_PROUI, HAS_HEATED_BED)
-            HMI_data.BedLevT
-          #else
-            LEVELING_BED_TEMP
-          #endif
-        );
+        #if ENABLED(RTS_AVAILABLE)
+          if (!abl.dryrun) probe.preheat_for_probing(probe_extrusion_temp,
+            #if BOTH(DWIN_LCD_PROUI, HAS_HEATED_BED)
+              HMI_data.BedLevT
+            #else
+              probe_bed_temp
+            #endif
+          );
+          gcode.process_subcommands_now(F("G28"));
+        #else
+          if (!abl.dryrun) probe.preheat_for_probing(LEVELING_NOZZLE_TEMP,
+            #if BOTH(DWIN_LCD_PROUI, HAS_HEATED_BED)
+              HMI_data.BedLevT
+            #else
+              LEVELING_BED_TEMP
+            #endif
+          );
+        #endif
+
       #endif
     }
 
@@ -730,8 +751,71 @@ G29_TYPE GcodeSuite::G29() {
 
             const float z = abl.measured_z + abl.Z_offset;
             abl.z_values[abl.meshCount.x][abl.meshCount.y] = z;
-            TERN_(EXTENSIBLE_UI, ExtUI::onMeshUpdate(abl.meshCount, z));
 
+            #if ENABLED(RTS_AVAILABLE)
+              if((showcount++) < GRID_MAX_POINTS_X * GRID_MAX_POINTS_Y)
+              {
+                rtscheck.RTS_SndData(showcount, AUTO_BED_LEVEL_ICON_VP);
+
+                #if ENABLED(TJC_AVAILABLE)  // Show bed leveling position
+                  #if ENABLED(NEPTUNE_3_PLUS)
+                    char temp[32] = {0};
+                    sprintf(temp, "leveling_49.q%d.picc=170",showcount-1); 
+                    LCD_SERIAL_2.printf(temp);
+                    LCD_SERIAL_2.printf("\xff\xff\xff");
+
+                    LCD_SERIAL_2.printf("leveling_49.tm0.en=1");
+                    LCD_SERIAL_2.printf("\xff\xff\xff");
+                  #elif ENABLED(NEPTUNE_3_MAX)
+                    char temp[32] = {0};
+                    //sprintf(temp, "leveling_64.q%d.picc=173",showcount-1);
+                    sprintf(temp, "leveling_63.q%d.picc=191",showcount-1);
+                    LCD_SERIAL_2.printf(temp);
+                    LCD_SERIAL_2.printf("\xff\xff\xff");
+
+                    //LCD_SERIAL_2.printf("leveling_64.tm0.en=1");
+                    LCD_SERIAL_2.printf("leveling_63.tm0.en=1");
+                    LCD_SERIAL_2.printf("\xff\xff\xff");
+                  #elif ENABLED(NEPTUNE_3_PRO)
+                    char temp[32] = {0};
+                    sprintf(temp, "leveling_36.q%d.picc=167",showcount-1); 
+                    LCD_SERIAL_2.printf(temp);
+                    LCD_SERIAL_2.printf("\xff\xff\xff");
+
+                    LCD_SERIAL_2.printf("leveling_36.tm0.en=1");
+                    LCD_SERIAL_2.printf("\xff\xff\xff");
+                  #endif                 
+                #endif
+              }
+
+              rtscheck.RTS_SndData(abl.z_values[abl.meshCount.x][abl.meshCount.y]*1000, AUTO_BED_LEVEL_1POINT_VP + (showcount - 1) * 2);
+              
+              #if ENABLED(TJC_AVAILABLE)
+                #if ENABLED(NEPTUNE_3_PLUS)
+                  char temp[32] = {0};
+                  //sprintf(temp, "leveldata_49.x%d.val=%d",showcount-1,(int)(abl.z_values[abl.meshCount.x][abl.meshCount.y]*100)); //显示数据
+                  sprintf(temp, "aux49_data.x%d.val=%d",showcount-1,(int)(abl.z_values[abl.meshCount.x][abl.meshCount.y]*100)); //显示数据
+                  LCD_SERIAL_2.printf(temp);
+                  LCD_SERIAL_2.printf("\xff\xff\xff");
+                #elif ENABLED(NEPTUNE_3_MAX)
+                  //sprintf(temp, "leveldata_64.x%d.val=%d",showcount-1,(int)(abl.z_values[abl.meshCount.x][abl.meshCount.y]*100)); //显示数据
+                  //sprintf(temp, "aux64_data.x%d.val=%d",showcount-1,(int)(abl.z_values[abl.meshCount.x][abl.meshCount.y]*100)); //显示数据
+                  char temp[32] = {0};
+                  sprintf(temp, "aux63_data.x%d.val=%d",showcount-1,(int)(abl.z_values[abl.meshCount.x][abl.meshCount.y]*100)); //显示数据
+                  LCD_SERIAL_2.printf(temp);
+                  LCD_SERIAL_2.printf("\xff\xff\xff");                 
+                #elif ENABLED(NEPTUNE_3_PRO)
+                  char temp[32] = {0};
+                  sprintf(temp, "leveldata_36.x%d.val=%d",showcount-1,(int)(abl.z_values[abl.meshCount.x][abl.meshCount.y]*100)); //显示数据
+                  LCD_SERIAL_2.printf(temp);
+                  LCD_SERIAL_2.printf("\xff\xff\xff");
+                #endif
+              #endif
+
+              if(showcount>=(GRID_MAX_POINTS_X * GRID_MAX_POINTS_Y)) showcount = 0;
+            #endif  
+
+            TERN_(EXTENSIBLE_UI, ExtUI::onMeshUpdate(abl.meshCount, z));
           #endif
 
           abl.reenable = false; // Don't re-enable after modifying the mesh
@@ -952,6 +1036,10 @@ G29_TYPE GcodeSuite::G29() {
   TERN_(HAS_MULTI_HOTEND, if (abl.tool_index != 0) tool_change(abl.tool_index));
 
   report_current_position();
+
+  #if ENABLED(RTS_AVAILABLE)
+    RTS_AutoBedLevelPage();
+  #endif
 
   G29_RETURN(isnan(abl.measured_z), true);
 }

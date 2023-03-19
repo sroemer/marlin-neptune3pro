@@ -77,6 +77,11 @@ void MarlinHAL::init() {
   #if PIN_EXISTS(LED)
     OUT_WRITE(LED_PIN, LOW);
   #endif
+  
+  // Turn on frame light
+  #ifdef RTS_AVAILABLE
+    OUT_WRITE(LED3_PIN, HIGH);
+  #endif
 
   #if ENABLED(SRAM_EEPROM_EMULATION)
     __HAL_RCC_PWR_CLK_ENABLE();
@@ -145,7 +150,9 @@ void MarlinHAL::clear_reset_source() { __HAL_RCC_CLEAR_RESET_FLAGS(); }
 // ------------------------
 
 #if ENABLED(USE_WATCHDOG)
-
+  #if ENABLED(RTS_AVAILABLE)
+    #define WATCHDOG_DURATION_8S
+  #endif
   #define WDT_TIMEOUT_US TERN(WATCHDOG_DURATION_8S, 8000000, 4000000) // 4 or 8 second timeout
 
   #include <IWatchdog.h>

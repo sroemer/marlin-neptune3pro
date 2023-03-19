@@ -64,6 +64,10 @@
   #include "../../feature/spindle_laser.h"
 #endif
 
+#if ENABLED(RTS_AVAILABLE)
+  #include "../../lcd/extui/dgus/elegoo/DGUSDisplayDef.h"
+#endif
+
 #define DEBUG_OUT ENABLED(DEBUG_LEVELING_FEATURE)
 #include "../../core/debug_out.h"
 
@@ -205,6 +209,10 @@
 void GcodeSuite::G28() {
   DEBUG_SECTION(log_G28, "G28", DEBUGGING(LEVELING));
   if (DEBUGGING(LEVELING)) log_machine_info();
+
+  #if ENABLED(RTS_AVAILABLE)
+    Home_stop_flag = true;
+  #endif
 
   TERN_(BD_SENSOR, bdl.config_state = 0);
 
@@ -596,6 +604,11 @@ void GcodeSuite::G28() {
 
   TERN_(HAS_DWIN_E3V2_BASIC, DWIN_HomingDone());
   TERN_(EXTENSIBLE_UI, ExtUI::onHomingDone());
+
+  #if ENABLED(RTS_AVAILABLE)
+    RTS_MoveAxisHoming();
+    Home_stop_flag = false;
+  #endif
 
   report_current_position();
 

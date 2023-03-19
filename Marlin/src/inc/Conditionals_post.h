@@ -2446,11 +2446,12 @@
 //
 
 // Flag the indexed hardware serial ports in use
-#define CONF_SERIAL_IS(N) (  (defined(SERIAL_PORT)      && SERIAL_PORT == N) \
-                          || (defined(SERIAL_PORT_2)    && SERIAL_PORT_2 == N) \
-                          || (defined(SERIAL_PORT_3)    && SERIAL_PORT_3 == N) \
-                          || (defined(MMU2_SERIAL_PORT) && MMU2_SERIAL_PORT == N) \
-                          || (defined(LCD_SERIAL_PORT)  && LCD_SERIAL_PORT == N) )
+#define CONF_SERIAL_IS(N) (  (defined(SERIAL_PORT)        && SERIAL_PORT == N) \
+                          || (defined(SERIAL_PORT_2)      && SERIAL_PORT_2 == N) \
+                          || (defined(SERIAL_PORT_3)      && SERIAL_PORT_3 == N) \
+                          || (defined(MMU2_SERIAL_PORT)   && MMU2_SERIAL_PORT == N) \
+                          || (defined(LCD_SERIAL_PORT)    && LCD_SERIAL_PORT == N) \
+                          || (defined(LCD_SERIAL_PORT_2)  && LCD_SERIAL_PORT_2 == N) )
 
 // Flag the named hardware serial ports in use
 #define TMC_UART_IS(A,N) (defined(A##_HARDWARE_SERIAL) && (CAT(HW_,A##_HARDWARE_SERIAL) == HW_Serial##N || CAT(HW_,A##_HARDWARE_SERIAL) == HW_MSerial##N))
@@ -3470,18 +3471,52 @@
   #define PROBING_MARGIN_FRONT 0
   #define PROBING_MARGIN_BACK 0
 #else
-  #ifndef PROBING_MARGIN_LEFT
-    #define PROBING_MARGIN_LEFT PROBING_MARGIN
+
+  #if NEPTUNE_3_PRO
+
+    #ifndef PROBING_MARGIN_LEFT
+      #define PROBING_MARGIN_LEFT PROBING_MARGIN
+    #endif
+    #ifndef PROBING_MARGIN_RIGHT
+      #define PROBING_MARGIN_RIGHT PROBING_MARGIN
+    #endif
+    #ifndef PROBING_MARGIN_FRONT
+      #define PROBING_MARGIN_FRONT PROBING_MARGIN
+    #endif
+    #ifndef PROBING_MARGIN_BACK
+      #define PROBING_MARGIN_BACK  PROBING_MARGIN
+    #endif
+
+  #elif NEPTUNE_3_PLUS
+
+    #ifndef PROBING_MARGIN_LEFT
+      #define PROBING_MARGIN_LEFT  PROBING_MARGIN
+    #endif
+    #ifndef PROBING_MARGIN_RIGHT
+      #define PROBING_MARGIN_RIGHT PROBING_MARGIN
+    #endif
+    #ifndef PROBING_MARGIN_FRONT
+      #define PROBING_MARGIN_FRONT PROBING_MARGIN
+    #endif
+    #ifndef PROBING_MARGIN_BACK
+      #define PROBING_MARGIN_BACK  PROBING_MARGIN
+    #endif
+
+  #elif NEPTUNE_3_MAX
+    #ifndef PROBING_MARGIN_LEFT
+      #define PROBING_MARGIN_LEFT PROBING_MARGIN
+    #endif
+    #ifndef PROBING_MARGIN_RIGHT
+      #define PROBING_MARGIN_RIGHT PROBING_MARGIN
+    #endif
+    #ifndef PROBING_MARGIN_FRONT
+      #define PROBING_MARGIN_FRONT 15
+    #endif
+    #ifndef PROBING_MARGIN_BACK
+      #define PROBING_MARGIN_BACK  15
+    #endif
   #endif
-  #ifndef PROBING_MARGIN_RIGHT
-    #define PROBING_MARGIN_RIGHT PROBING_MARGIN
-  #endif
-  #ifndef PROBING_MARGIN_FRONT
-    #define PROBING_MARGIN_FRONT PROBING_MARGIN
-  #endif
-  #ifndef PROBING_MARGIN_BACK
-    #define PROBING_MARGIN_BACK PROBING_MARGIN
-  #endif
+
 #endif
 
 #if ENABLED(DELTA)
