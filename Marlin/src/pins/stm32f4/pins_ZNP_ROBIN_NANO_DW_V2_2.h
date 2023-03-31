@@ -19,33 +19,37 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  *
  */
-
 #pragma once
 
-#define DISABLE_DEBUG false // DISABLE_(DEBUG|JTAG) is not supported for STM32F4.
-#define ALLOW_STM32F4
+#include "env_validate.h"
+
+#ifndef BOARD_INFO_NAME
+  #define BOARD_INFO_NAME "ZNP Robin Nano DW V2.2"
+#endif
+
+
 
 //
-// Limit Switches 
+// Limit Switches
 //
-#define X_DIAG_PIN                          PA13    // PA13   X-;//PC14 Z+
+#define X_DIAG_PIN                          PA13   // PA13   X-;//PC14 Z+
 #define Y_DIAG_PIN                          PB8
 #define Z_DIAG_PIN                          PC13
 
-#define X_STOP_PIN                        X_DIAG_PIN
-#define Y_STOP_PIN                        Y_DIAG_PIN
-#define Z_MIN_PIN                         Z_DIAG_PIN
+#define X_STOP_PIN                          X_DIAG_PIN
+#define Y_STOP_PIN                          Y_DIAG_PIN
+#define Z_MIN_PIN                           Z_DIAG_PIN
 
 //
 // Z Probe must be this pin
 //
-#define Z_MIN_PROBE_PIN                     PA8  // PROBE
+#define Z_MIN_PROBE_PIN                     PA8    // PROBE
 
 //
 // Temperature Sensors
 //
-#define TEMP_0_PIN                          PC1   // TH1
-#define TEMP_BED_PIN                        PC0   // TB1
+#define TEMP_0_PIN                          PC1    // TH1
+#define TEMP_BED_PIN                        PC0    // TB1
 
 //
 // Steppers
@@ -68,22 +72,15 @@
 
 
 //
-// LED
+// CASE LIGHT
 //
-#define LED3_PIN                            PB9    // Frame Light
+#define LED3_PIN                            PB9
+#define CASE_LIGHT_PIN                      LED3_PIN
 
 //
 // BEEPER
 //
-#define BEEPER_PIN                          PC15   // Buzzer
-
-//
-// Auto fans
-//
-#define AUTO_FAN_PIN                        PB0    //FAN2
-#ifndef E0_AUTO_FAN_PIN
-  #define E0_AUTO_FAN_PIN           AUTO_FAN_PIN
-#endif
+#define BEEPER_PIN                          PC15
 
 //
 // Heaters / Fans
@@ -91,25 +88,26 @@
 #define HEATER_0_PIN                        PA6    // "HE"
 #define HEATER_BED_PIN                      PA5    // "HB"
 #define FAN_PIN                             PA7    // FAN1
+#define FAN1_PIN                            PB0    // FAN2 (used as E0_AUTO_FAN_PIN in Configuration_adv.h)
 
 //
 // Filament Runout Sensor
 //
-#define CHECKFILEMENT0_PIN                PB4
+#define CHECKFILEMENT0_PIN                  PB4
 
 // Use one of these or SDCard-based Emulation will be used
-//#define SRAM_EEPROM_EMULATION                   // Use BackSRAM-based EEPROM emulation
-//#define FLASH_EEPROM_EMULATION                  // Use Flash-based EEPROM emulation
+//#define SRAM_EEPROM_EMULATION                    // Use BackSRAM-based EEPROM emulation
+//#define FLASH_EEPROM_EMULATION                   // Use Flash-based EEPROM emulation
 #if EITHER(NO_EEPROM_SELECTED, I2C_EEPROM)
   #define I2C_EEPROM
-  #define MARLIN_EEPROM_SIZE              0x1000  // 4KB
+  #define MARLIN_EEPROM_SIZE                0x1000 // 4KB
   #define I2C_SCL_PIN                       PB6
   #define I2C_SDA_PIN                       PB7
 #endif
 
 // Оn the servos connector
 #ifndef FIL_RUNOUT_PIN
-  #define FIL_RUNOUT_PIN                       CHECKFILEMENT0_PIN
+  #define FIL_RUNOUT_PIN                    CHECKFILEMENT0_PIN
 #endif
 
 
@@ -130,7 +128,7 @@
   #define SD_MISO_PIN                       PB14
   #define SD_MOSI_PIN                       PB15
   #define SD_DETECT_PIN                     PC3
-  #define SD_SPI_SPEED                      SPI_FULL_SPEED        
+  #define SD_SPI_SPEED                      SPI_FULL_SPEED
 #endif
 
 // Ignore temp readings during development.

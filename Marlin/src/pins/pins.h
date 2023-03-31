@@ -624,85 +624,85 @@
 //
 
 #elif MB(ARMED)
-  #include "stm32f4/pins_ARMED.h"               // STM32F4                                env:ARMED
+  #include "stm32f4/pins_ARMED.h"                  // STM32F4                             env:ARMED
 #elif MB(RUMBA32_V1_0, RUMBA32_V1_1)
-  #include "stm32f4/pins_RUMBA32_AUS3D.h"       // STM32F4                                env:rumba32
+  #include "stm32f4/pins_RUMBA32_AUS3D.h"          // STM32F4                             env:rumba32
 #elif MB(RUMBA32_MKS)
-  #include "stm32f4/pins_RUMBA32_MKS.h"         // STM32F4                                env:rumba32
+  #include "stm32f4/pins_RUMBA32_MKS.h"            // STM32F4                             env:rumba32
 #elif MB(RUMBA32_BTT)
-  #include "stm32f4/pins_RUMBA32_BTT.h"         // STM32F4                                env:rumba32
+  #include "stm32f4/pins_RUMBA32_BTT.h"            // STM32F4                             env:rumba32
 #elif MB(BLACK_STM32F407VE)
-  #include "stm32f4/pins_BLACK_STM32F407VE.h"   // STM32F4                                env:STM32F407VE_black
+  #include "stm32f4/pins_BLACK_STM32F407VE.h"      // STM32F4                             env:STM32F407VE_black
 #elif MB(BTT_SKR_PRO_V1_1)
-  #include "stm32f4/pins_BTT_SKR_PRO_V1_1.h"    // STM32F4                                env:BIGTREE_SKR_PRO env:BIGTREE_SKR_PRO_usb_flash_drive
+  #include "stm32f4/pins_BTT_SKR_PRO_V1_1.h"       // STM32F4                             env:BIGTREE_SKR_PRO env:BIGTREE_SKR_PRO_usb_flash_drive
 #elif MB(BTT_SKR_PRO_V1_2)
-  #include "stm32f4/pins_BTT_SKR_PRO_V1_2.h"    // STM32F4                                env:BIGTREE_SKR_PRO env:BIGTREE_SKR_PRO_usb_flash_drive
+  #include "stm32f4/pins_BTT_SKR_PRO_V1_2.h"       // STM32F4                             env:BIGTREE_SKR_PRO env:BIGTREE_SKR_PRO_usb_flash_drive
 #elif MB(BTT_GTR_V1_0)
-  #include "stm32f4/pins_BTT_GTR_V1_0.h"        // STM32F4                                env:BIGTREE_GTR_V1_0 env:BIGTREE_GTR_V1_0_usb_flash_drive
+  #include "stm32f4/pins_BTT_GTR_V1_0.h"           // STM32F4                             env:BIGTREE_GTR_V1_0 env:BIGTREE_GTR_V1_0_usb_flash_drive
 #elif MB(BTT_BTT002_V1_0)
-  #include "stm32f4/pins_BTT_BTT002_V1_0.h"     // STM32F4                                env:BIGTREE_BTT002 env:BIGTREE_BTT002_VET6
+  #include "stm32f4/pins_BTT_BTT002_V1_0.h"        // STM32F4                             env:BIGTREE_BTT002 env:BIGTREE_BTT002_VET6
 #elif MB(BTT_E3_RRF)
-  #include "stm32f4/pins_BTT_E3_RRF.h"          // STM32F4                                env:BIGTREE_E3_RRF
+  #include "stm32f4/pins_BTT_E3_RRF.h"             // STM32F4                             env:BIGTREE_E3_RRF
 #elif MB(BTT_SKR_V2_0_REV_A)
-  #include "stm32f4/pins_BTT_SKR_V2_0_REV_A.h"  // STM32F4                                env:BIGTREE_SKR_2 env:BIGTREE_SKR_2_USB env:BIGTREE_SKR_2_USB_debug
+  #include "stm32f4/pins_BTT_SKR_V2_0_REV_A.h"     // STM32F4                             env:BIGTREE_SKR_2 env:BIGTREE_SKR_2_USB env:BIGTREE_SKR_2_USB_debug
 #elif MB(BTT_SKR_V2_0_REV_B)
-  #include "stm32f4/pins_BTT_SKR_V2_0_REV_B.h"  // STM32F4                                env:BIGTREE_SKR_2 env:BIGTREE_SKR_2_USB env:BIGTREE_SKR_2_USB_debug env:BIGTREE_SKR_2_F429 env:BIGTREE_SKR_2_F429_USB env:BIGTREE_SKR_2_F429_USB_debug
+  #include "stm32f4/pins_BTT_SKR_V2_0_REV_B.h"     // STM32F4                             env:BIGTREE_SKR_2 env:BIGTREE_SKR_2_USB env:BIGTREE_SKR_2_USB_debug env:BIGTREE_SKR_2_F429 env:BIGTREE_SKR_2_F429_USB env:BIGTREE_SKR_2_F429_USB_debug
 #elif MB(BTT_OCTOPUS_V1_0)
-  #include "stm32f4/pins_BTT_OCTOPUS_V1_0.h"    // STM32F4                                env:BIGTREE_OCTOPUS_V1 env:BIGTREE_OCTOPUS_V1_USB
+  #include "stm32f4/pins_BTT_OCTOPUS_V1_0.h"       // STM32F4                             env:BIGTREE_OCTOPUS_V1 env:BIGTREE_OCTOPUS_V1_USB
 #elif MB(BTT_OCTOPUS_V1_1)
-  #include "stm32f4/pins_BTT_OCTOPUS_V1_1.h"    // STM32F4                                env:BIGTREE_OCTOPUS_V1 env:BIGTREE_OCTOPUS_V1_USB
+  #include "stm32f4/pins_BTT_OCTOPUS_V1_1.h"       // STM32F4                             env:BIGTREE_OCTOPUS_V1 env:BIGTREE_OCTOPUS_V1_USB
 #elif MB(BTT_OCTOPUS_PRO_V1_0)
-  #include "stm32f4/pins_BTT_OCTOPUS_PRO_V1_0.h" // STM32F4                               env:BIGTREE_OCTOPUS_V1 env:BIGTREE_OCTOPUS_V1_USB env:BIGTREE_OCTOPUS_PRO_V1_F429 env:BIGTREE_OCTOPUS_PRO_V1_F429_USB
+  #include "stm32f4/pins_BTT_OCTOPUS_PRO_V1_0.h"   // STM32F4                             env:BIGTREE_OCTOPUS_V1 env:BIGTREE_OCTOPUS_V1_USB env:BIGTREE_OCTOPUS_PRO_V1_F429 env:BIGTREE_OCTOPUS_PRO_V1_F429_USB
 #elif MB(LERDGE_K)
-  #include "stm32f4/pins_LERDGE_K.h"            // STM32F4                                env:LERDGEK env:LERDGEK_usb_flash_drive
+  #include "stm32f4/pins_LERDGE_K.h"               // STM32F4                             env:LERDGEK env:LERDGEK_usb_flash_drive
 #elif MB(LERDGE_S)
-  #include "stm32f4/pins_LERDGE_S.h"            // STM32F4                                env:LERDGES env:LERDGES_usb_flash_drive
+  #include "stm32f4/pins_LERDGE_S.h"               // STM32F4                             env:LERDGES env:LERDGES_usb_flash_drive
 #elif MB(LERDGE_X)
-  #include "stm32f4/pins_LERDGE_X.h"            // STM32F4                                env:LERDGEX env:LERDGEX_usb_flash_drive
+  #include "stm32f4/pins_LERDGE_X.h"               // STM32F4                             env:LERDGEX env:LERDGEX_usb_flash_drive
 #elif MB(VAKE403D)
-  #include "stm32f4/pins_VAKE403D.h"            // STM32F4
+  #include "stm32f4/pins_VAKE403D.h"               // STM32F4
 #elif MB(FYSETC_S6)
-  #include "stm32f4/pins_FYSETC_S6.h"           // STM32F4                                env:FYSETC_S6 env:FYSETC_S6_8000
+  #include "stm32f4/pins_FYSETC_S6.h"              // STM32F4                             env:FYSETC_S6 env:FYSETC_S6_8000
 #elif MB(FYSETC_S6_V2_0)
-  #include "stm32f4/pins_FYSETC_S6_V2_0.h"      // STM32F4                                env:FYSETC_S6 env:FYSETC_S6_8000
+  #include "stm32f4/pins_FYSETC_S6_V2_0.h"         // STM32F4                             env:FYSETC_S6 env:FYSETC_S6_8000
 #elif MB(FYSETC_SPIDER)
-  #include "stm32f4/pins_FYSETC_SPIDER.h"       // STM32F4                                env:FYSETC_S6 env:FYSETC_S6_8000
+  #include "stm32f4/pins_FYSETC_SPIDER.h"          // STM32F4                             env:FYSETC_S6 env:FYSETC_S6_8000
 #elif MB(FYSETC_SPIDER_V2_2)
-  #include "stm32f4/pins_FYSETC_SPIDER_V2_2.h"  // STM32F4                                env:FYSETC_S6 env:FYSETC_S6_8000
+  #include "stm32f4/pins_FYSETC_SPIDER_V2_2.h"     // STM32F4                             env:FYSETC_S6 env:FYSETC_S6_8000
 #elif MB(FLYF407ZG)
-  #include "stm32f4/pins_FLYF407ZG.h"           // STM32F4                                env:FLYF407ZG
+  #include "stm32f4/pins_FLYF407ZG.h"              // STM32F4                             env:FLYF407ZG
 #elif MB(MKS_ROBIN2)
-  #include "stm32f4/pins_MKS_ROBIN2.h"          // STM32F4                                env:MKS_ROBIN2
+  #include "stm32f4/pins_MKS_ROBIN2.h"             // STM32F4                             env:MKS_ROBIN2
 #elif MB(MKS_ROBIN_PRO_V2)
-  #include "stm32f4/pins_MKS_ROBIN_PRO_V2.h"    // STM32F4                                env:mks_robin_pro2
+  #include "stm32f4/pins_MKS_ROBIN_PRO_V2.h"       // STM32F4                             env:mks_robin_pro2
 #elif MB(MKS_ROBIN_NANO_V3)
-  #include "stm32f4/pins_MKS_ROBIN_NANO_V3.h"   // STM32F4                                env:mks_robin_nano_v3 env:mks_robin_nano_v3_usb_flash_drive env:mks_robin_nano_v3_usb_flash_drive_msc
+  #include "stm32f4/pins_MKS_ROBIN_NANO_V3.h"      // STM32F4                             env:mks_robin_nano_v3 env:mks_robin_nano_v3_usb_flash_drive env:mks_robin_nano_v3_usb_flash_drive_msc
 #elif MB(MKS_ROBIN_NANO_V3_1)
-  #include "stm32f4/pins_MKS_ROBIN_NANO_V3.h"   // STM32F4                                env:mks_robin_nano_v3_1 env:mks_robin_nano_v3_1_usb_flash_drive env:mks_robin_nano_v3_1_usb_flash_drive_msc
+  #include "stm32f4/pins_MKS_ROBIN_NANO_V3.h"      // STM32F4                             env:mks_robin_nano_v3_1 env:mks_robin_nano_v3_1_usb_flash_drive env:mks_robin_nano_v3_1_usb_flash_drive_msc
 #elif MB(ANET_ET4)
-  #include "stm32f4/pins_ANET_ET4.h"            // STM32F4                                env:Anet_ET4_no_bootloader env:Anet_ET4_OpenBLT
+  #include "stm32f4/pins_ANET_ET4.h"               // STM32F4                             env:Anet_ET4_no_bootloader env:Anet_ET4_OpenBLT
 #elif MB(ANET_ET4P)
-  #include "stm32f4/pins_ANET_ET4P.h"           // STM32F4                                env:Anet_ET4_no_bootloader env:Anet_ET4_OpenBLT
+  #include "stm32f4/pins_ANET_ET4P.h"              // STM32F4                             env:Anet_ET4_no_bootloader env:Anet_ET4_OpenBLT
 #elif MB(FYSETC_CHEETAH_V20)
-  #include "stm32f4/pins_FYSETC_CHEETAH_V20.h"  // STM32F4                                env:FYSETC_CHEETAH_V20
+  #include "stm32f4/pins_FYSETC_CHEETAH_V20.h"     // STM32F4                             env:FYSETC_CHEETAH_V20
 #elif MB(MKS_MONSTER8_V1)
-  #include "stm32f4/pins_MKS_MONSTER8_V1.h"     // STM32F4                                env:mks_monster8 env:mks_monster8_usb_flash_drive env:mks_monster8_usb_flash_drive_msc
+  #include "stm32f4/pins_MKS_MONSTER8_V1.h"        // STM32F4                             env:mks_monster8 env:mks_monster8_usb_flash_drive env:mks_monster8_usb_flash_drive_msc
 #elif MB(MKS_MONSTER8_V2)
-  #include "stm32f4/pins_MKS_MONSTER8_V2.h"     // STM32F4                                env:mks_monster8 env:mks_monster8_usb_flash_drive env:mks_monster8_usb_flash_drive_msc
+  #include "stm32f4/pins_MKS_MONSTER8_V2.h"        // STM32F4                             env:mks_monster8 env:mks_monster8_usb_flash_drive env:mks_monster8_usb_flash_drive_msc
 #elif MB(TH3D_EZBOARD_V2)
-  #include "stm32f4/pins_TH3D_EZBOARD_V2.h"     // STM32F4                                env:TH3D_EZBoard_V2_no_bootloader env:TH3D_EZBoard_V2_OpenBLT
+  #include "stm32f4/pins_TH3D_EZBOARD_V2.h"        // STM32F4                             env:TH3D_EZBoard_V2_no_bootloader env:TH3D_EZBoard_V2_OpenBLT
 #elif MB(OPULO_LUMEN_REV3)
-  #include "stm32f4/pins_OPULO_LUMEN_REV3.h"    // STM32F4                                env:Opulo_Lumen_REV3
+  #include "stm32f4/pins_OPULO_LUMEN_REV3.h"       // STM32F4                             env:Opulo_Lumen_REV3
 #elif MB(MKS_ROBIN_NANO_V1_3_F4)
   #include "stm32f4/pins_MKS_ROBIN_NANO_V1_3_F4.h" // STM32F4                             env:mks_robin_nano_v1_3_f4
 #elif MB(MKS_EAGLE)
-  #include "stm32f4/pins_MKS_EAGLE.h"           // STM32F4                                env:mks_eagle
+  #include "stm32f4/pins_MKS_EAGLE.h"              // STM32F4                             env:mks_eagle
 #elif MB(ARTILLERY_RUBY)
-  #include "stm32f4/pins_ARTILLERY_RUBY.h"      // STM32F4                                env:Artillery_Ruby
+  #include "stm32f4/pins_ARTILLERY_RUBY.h"         // STM32F4                             env:Artillery_Ruby
 #elif MB(CREALITY_V24S1_301F4)
-  #include "stm32f4/pins_CREALITY_V24S1_301F4.h" // STM32F4                               env:STM32F401RC_creality env:STM32F401RC_creality_jlink env:STM32F401RC_creality_stlink
-#elif MB(MKS_E3D_V2)                            
-  #include "stm32f4/pins_MKS_E3_V2.h"           // STM32F4                                env:MKS_E3_V2
+  #include "stm32f4/pins_CREALITY_V24S1_301F4.h"   // STM32F4                             env:STM32F401RC_creality env:STM32F401RC_creality_jlink env:STM32F401RC_creality_stlink
+#elif MB(ZNP_ROBIN_NANO_DW_V2_2)
+  #include "stm32f4/pins_ZNP_ROBIN_NANO_DW_V2_2.h" // STM32F4                             env:ZNP_ROBIN_NANO_DW_V2_2
 
 //
 // ARM Cortex M7

@@ -42,11 +42,13 @@ void GcodeSuite::M300() {
     LCD_SERIAL_2.printf(temp);
     LCD_SERIAL_2.printf("\xff\xff\xff");
   #else
-    uint16_t const frequency = parser.ushortval('S', 260);
-    uint16_t duration = parser.ushortval('P', 1000);
-    // Limits the tone duration to 0-5 seconds.
-    NOMORE(duration, 5000U);
-    BUZZ(duration, frequency);
+  uint16_t const frequency = parser.ushortval('S', 260);
+  uint16_t duration = parser.ushortval('P', 1000);
+
+  // Limits the tone duration to 0-5 seconds.
+  NOMORE(duration, 5000U);
+
+  BUZZ(duration, frequency);
   #endif
 
 }

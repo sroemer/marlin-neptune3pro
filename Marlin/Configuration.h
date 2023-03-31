@@ -86,18 +86,26 @@
 // @section machine
 
 //Neptune Machine Select
+#define NEPTUNE_3_PRO      1
+//#define NEPTUNE_3_PLUS   1
+//#define NEPTUNE_3_MAX    1
+
 #define RTS_AVAILABLE
 #define TJC_AVAILABLE
 
 // Choose the name from boards.h that matches your setup
 #ifndef MOTHERBOARD
-  #define MOTHERBOARD BOARD_MKS_E3D_V2
-  #if ENABLED(RTS_AVAILABLE)
-    #define NEPTUNE_3_PRO      1
-    //#define NEPTUNE_3_PLUS   1
-    //#define NEPTUNE_3_MAX    1
-    #endif
+  #define MOTHERBOARD BOARD_ZNP_ROBIN_NANO_DW_V2_2
 #endif
+
+/**
+ * Select the LCD serial port used for communication with the DGUS Display
+ * (Even if the LCD is connected only via a single serial connection, currently
+ * two serial ports are required due to the modifications made by Elegoo.
+ * Further cleanup is required to avoid the second serial connection.)
+ */
+#define LCD_SERIAL_PORT   2 // this port should not be required for the LCD
+#define LCD_SERIAL_PORT_2 6 // acutal connection to LCD
 
 /**
  * Select the serial port on the board to use for communication with the host.
@@ -569,13 +577,13 @@
 #endif
 
 #if HAS_E_TEMP_SENSOR
-  #define TEMP_RESIDENCY_TIME         5  // (seconds) Time to wait for hotend to "settle" in M109
+  #define TEMP_RESIDENCY_TIME          5  // (seconds) Time to wait for hotend to "settle" in M109
   #define TEMP_WINDOW                  3  // (°C) Temperature proximity for the "temperature reached" timer
   #define TEMP_HYSTERESIS              5  // (°C) Temperature proximity considered "close enough" to the target
 #endif
 
 #if TEMP_SENSOR_BED
-  #define TEMP_BED_RESIDENCY_TIME     5  // (seconds) Time to wait for bed to "settle" in M190
+  #define TEMP_BED_RESIDENCY_TIME      5  // (seconds) Time to wait for bed to "settle" in M190
   #define TEMP_BED_WINDOW              3  // (°C) Temperature proximity for the "temperature reached" timer
   #define TEMP_BED_HYSTERESIS          5  // (°C) Temperature proximity considered "close enough" to the target
 #endif
@@ -666,9 +674,9 @@
     #define DEFAULT_Ki_LIST {   1.08,   1.08 }
     #define DEFAULT_Kd_LIST { 114.00, 114.00 }
   #else
-    #define DEFAULT_Kp   22.2
+    #define DEFAULT_Kp  22.20
     #define DEFAULT_Ki   1.80
-    #define DEFAULT_Kd  119.00
+    #define DEFAULT_Kd 119.00
   #endif
 #endif
 
@@ -1232,7 +1240,7 @@
 #if ENABLED(CLASSIC_JERK)
   #define DEFAULT_XJERK 8.0
   #define DEFAULT_YJERK 8.0
-  #define DEFAULT_ZJERK  0.4
+  #define DEFAULT_ZJERK 0.4
   //#define DEFAULT_IJERK  0.3
   //#define DEFAULT_JJERK  0.3
   //#define DEFAULT_KJERK  0.3
@@ -1505,7 +1513,6 @@
 #elif NEPTUNE_3_PLUS
   #define PROBING_MARGIN 15
 #elif NEPTUNE_3_MAX
-  //#define PROBING_MARGIN 40
   #define PROBING_MARGIN 33
 #endif
 
@@ -1748,7 +1755,6 @@
   #define Y_MAX_POS Y_BED_SIZE
   #define Z_MAX_POS 500
 #endif
-
 //#define I_MIN_POS 0
 //#define I_MAX_POS 50
 //#define J_MIN_POS 0
@@ -1994,11 +2000,11 @@
 #if EITHER(AUTO_BED_LEVELING_LINEAR, AUTO_BED_LEVELING_BILINEAR)
 
   // Set the number of grid points per dimension.
-  #if NEPTUNE_3_PLUS
-    #define GRID_MAX_POINTS_X 7
-    #define GRID_MAX_POINTS_Y GRID_MAX_POINTS_X
-  #elif NEPTUNE_3_PRO
+  #if NEPTUNE_3_PRO
     #define GRID_MAX_POINTS_X 6
+    #define GRID_MAX_POINTS_Y GRID_MAX_POINTS_X
+  #elif NEPTUNE_3_PLUS
+    #define GRID_MAX_POINTS_X 7
     #define GRID_MAX_POINTS_Y GRID_MAX_POINTS_X
   #elif NEPTUNE_3_MAX
     #define GRID_MAX_POINTS_X 7
@@ -2902,8 +2908,6 @@
 // (For CR-10 owners who want to replace the Melzi Creality board but retain the display)
 //
 //#define CR10_STOCKDISPLAY
-
-// resistive touch screen
 
 //
 // Ender-2 OEM display, a variant of the MKS_MINI_12864

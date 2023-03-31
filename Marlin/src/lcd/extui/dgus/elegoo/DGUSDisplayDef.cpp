@@ -44,7 +44,7 @@
   #include "../../../../gcode/gcode.h"
   #include "../../../../../src/feature/bedlevel/bedlevel.h"
   #include "../../../../../src/feature/bedlevel/abl/bbl.h"
-  
+
   #include "../../../../lcd/extui/dgus/elegoo/DGUSDisplayDef.h"
   #include "../../../../lcd/extui/ui_api.h"
 
@@ -53,7 +53,7 @@
   #include "../../../../lcd/extui/dgus/DGUSScreenHandler.h"
   #include "../../../../lcd/extui/dgus/DGUSScreenHandlerBase.h"
   #include "../../../../lcd/extui/dgus/DGUSVPVariable.h"
-  
+
 
   //Stepper stepper; // Singleton
 
@@ -83,7 +83,7 @@
     float current_position_x1_axis = X2_MAX_POS;
     float current_position_x1_axis = X_MIN_POS;
   #endif
-  
+
   int heatway = 0;
   millis_t next_rts_update_ms = 0;
   int last_target_temperature[4] = {0};
@@ -119,7 +119,7 @@
   char commandbuf[30];
   bool active_extruder_flag = false;
 
-  static int change_page_number = 1; 
+  static int change_page_number = 1;
 
   char save_dual_x_carriage_mode = 0;
 
@@ -141,10 +141,10 @@
   bool status_led2 = false;
 
   uint8_t temp_set_flag = 0x00;
-  
+
   celsius_t pla_extrusion_temp;
   celsius_t pla_bed_temp;
-    
+
   celsius_t petg_extrusion_temp;
   celsius_t petg_bed_temp;
 
@@ -157,7 +157,7 @@
   celsius_t probe_extrusion_temp;
   celsius_t probe_bed_temp;
 
-  //bool enable_filment_check = false; 
+  //bool enable_filment_check = false;
   bool enable_filment_check = true;
 
   char temp[128];
@@ -189,11 +189,11 @@
   uint8_t restFlag1 = 0;
   uint8_t restFlag2 = 0;
 
-  void RTS_reset_settings(void) 
+  void RTS_reset_settings(void)
   {
     pla_extrusion_temp = PREHEAT_1_TEMP_HOTEND;
     pla_bed_temp = PREHEAT_1_TEMP_BED;
-      
+
     petg_extrusion_temp = PREHEAT_2_TEMP_HOTEND;
     petg_bed_temp = PREHEAT_2_TEMP_BED;
 
@@ -204,7 +204,7 @@
     tpu_bed_temp = PREHEAT_4_TEMP_BED;
 
     probe_extrusion_temp = LEVELING_NOZZLE_TEMP;
-    probe_bed_temp = LEVELING_BED_TEMP;  
+    probe_bed_temp = LEVELING_BED_TEMP;
   }
 
   inline void RTS_line_to_current(AxisEnum axis)
@@ -302,7 +302,7 @@
         databuf[5] = snddat.addr & 0xFF;
         databuf[6] = snddat.bytelen;
       }
-      
+
       #if ENABLED(TJC_AVAILABLE)
 
       #else
@@ -368,9 +368,9 @@
     RTS_SndData();
   }
 
-  void RTSSHOW::RTS_SndData(unsigned char *str, unsigned long addr, unsigned char cmd) 
-  { 
-    RTS_SndData((char *)str, addr, cmd); 
+  void RTSSHOW::RTS_SndData(unsigned char *str, unsigned long addr, unsigned char cmd)
+  {
+    RTS_SndData((char *)str, addr, cmd);
   }
 
   void RTSSHOW::RTS_SndData(int n, unsigned long addr, unsigned char cmd /*= VarAddr_W*/)
@@ -404,19 +404,19 @@
     RTS_SndData();
   }
 
-  void RTSSHOW::RTS_SndData(unsigned int n, unsigned long addr, unsigned char cmd) 
-  { 
-    RTS_SndData((int)n, addr, cmd); 
+  void RTSSHOW::RTS_SndData(unsigned int n, unsigned long addr, unsigned char cmd)
+  {
+    RTS_SndData((int)n, addr, cmd);
   }
 
-  void RTSSHOW::RTS_SndData(float n, unsigned long addr, unsigned char cmd) 
-  { 
-    RTS_SndData((int)n, addr, cmd); 
+  void RTSSHOW::RTS_SndData(float n, unsigned long addr, unsigned char cmd)
+  {
+    RTS_SndData((int)n, addr, cmd);
   }
 
-  void RTSSHOW::RTS_SndData(long n, unsigned long addr, unsigned char cmd) 
-  { 
-    RTS_SndData((unsigned long)n, addr, cmd); 
+  void RTSSHOW::RTS_SndData(long n, unsigned long addr, unsigned char cmd)
+  {
+    RTS_SndData((unsigned long)n, addr, cmd);
   }
 
   void RTSSHOW::RTS_SndData(unsigned long n, unsigned long addr, unsigned char cmd /*= VarAddr_W*/)
@@ -457,8 +457,8 @@
     // {
     //   uint8_t page_num = ((filecount / 5) + 1);
 
-    //   if (filelist.seek(filecount)) 
-    //   {                   
+    //   if (filelist.seek(filecount))
+    //   {
     //     sprintf(tmpfilename, "file%d.t%d.txt=\"%s\"", page_num, filecount , filelist.filename());
     //     LCD_SERIAL_2.printf(tmpfilename);
     //     LCD_SERIAL_2.printf("\xff\xff\xff");
@@ -467,7 +467,7 @@
     //   {
     //     sprintf(tmpfilename, "file%d.t%d.txt=\"\"", page_num, filecount);
     //     LCD_SERIAL_2.printf(tmpfilename);
-    //     LCD_SERIAL_2.printf("\xff\xff\xff");                    
+    //     LCD_SERIAL_2.printf("\xff\xff\xff");
     //   }
     // }
 
@@ -486,7 +486,7 @@
 
       for(uint16_t i = 0;(i < fileCnt) && (i < (MaxFileNumber + addrnum));i++)
       {
-        card.selectFileByIndex(fileCnt - 1 - i);  
+        card.selectFileByIndex(fileCnt - 1 - i);
         char *pointFilename = card.longFilename;
         int filenamelen = strlen(card.longFilename);
         int j = 1;
@@ -519,19 +519,19 @@
           #if ENABLED(TJC_AVAILABLE)
             char tmpfilename[32]={0};
             uint8_t page_num = ((j / 5) + 1);
-            sprintf(tmpfilename, "file%d.t%d.txt=\"\"", page_num, j); 
+            sprintf(tmpfilename, "file%d.t%d.txt=\"\"", page_num, j);
             LCD_SERIAL_2.printf(tmpfilename);
-            LCD_SERIAL_2.printf("\xff\xff\xff"); 
+            LCD_SERIAL_2.printf("\xff\xff\xff");
           #endif
         }
 
         //显示文件名
         #if ENABLED(TJC_AVAILABLE)
           uint8_t page_num = ((num / 5) + 1);
-          char filename[128]={0}; 
-          sprintf(filename, "file%d.t%d.txt=\"%s\"", page_num, num, CardRecbuf.Cardshowfilename[num]); 
+          char filename[128]={0};
+          sprintf(filename, "file%d.t%d.txt=\"%s\"", page_num, num, CardRecbuf.Cardshowfilename[num]);
           LCD_SERIAL_2.printf(filename);
-          LCD_SERIAL_2.printf("\xff\xff\xff");         
+          LCD_SERIAL_2.printf("\xff\xff\xff");
         #endif
 
         CardRecbuf.Filesum = (++num);
@@ -540,7 +540,7 @@
       // clean print file
       for(int j = 0;j < 25;j ++)
       {
-        RTS_SndData(0, PRINT_FILE_TEXT_VP + j);       
+        RTS_SndData(0, PRINT_FILE_TEXT_VP + j);
       }
 
       lcd_sd_status = IS_SD_INSERTED();
@@ -565,14 +565,14 @@
             #endif
           }
 
-          //清除文件 
+          //清除文件
           #if ENABLED(TJC_AVAILABLE)
             memset(tmpfilename,0,sizeof(tmpfilename));
             uint8_t page_num = ((j / 5) + 1);
-            sprintf(tmpfilename, "file%d.t%d.txt=\"\"", page_num, j); 
+            sprintf(tmpfilename, "file%d.t%d.txt=\"\"", page_num, j);
             LCD_SERIAL_2.printf(tmpfilename);
             LCD_SERIAL_2.printf("\xff\xff\xff");
-            delay(10); 
+            delay(10);
           #endif
         }
         memset(&CardRecbuf, 0, sizeof(CardRecbuf));
@@ -636,7 +636,7 @@
       LCD_SERIAL_2.printf("\xff\xff\xff");
 
       LCD_SERIAL_2.printf("printpause.cp0.aph=0");
-      LCD_SERIAL_2.printf("\xff\xff\xff");          
+      LCD_SERIAL_2.printf("\xff\xff\xff");
 
       LCD_SERIAL_2.printf("printpause.va0.txt=\"\"");
       LCD_SERIAL_2.printf("\xff\xff\xff");
@@ -695,7 +695,7 @@
       else
       {
         card.release();
-        
+
         // if(sd_printing_autopause == true)
         // {
         //   RTS_SndData(CardRecbuf.Cardshowfilename[CardRecbuf.recordcount], PRINT_FILE_TEXT_VP);
@@ -716,13 +716,13 @@
           #if ENABLED(TJC_AVAILABLE)
             for(int j = 0; j < MaxFileNumber; j++)
             {
-              //清除文件       
+              //清除文件
               char tmpfilename[32];
               memset(tmpfilename,0,sizeof(tmpfilename));
               uint8_t page_num = ((j / 5) + 1);
-              sprintf(tmpfilename, "file%d.t%d.txt=\"\"", page_num, j); 
+              sprintf(tmpfilename, "file%d.t%d.txt=\"\"", page_num, j);
               LCD_SERIAL_2.printf(tmpfilename);
-              LCD_SERIAL_2.printf("\xff\xff\xff"); 
+              LCD_SERIAL_2.printf("\xff\xff\xff");
             }
           #endif
 
@@ -752,10 +752,10 @@
         delay(1);
         #if ENABLED(TJC_AVAILABLE)
           uint8_t page_num = ((i / 5) + 1);
-          char filename[128]={0}; 
-          sprintf(filename, "file%d.t%d.txt=\"%s\"", page_num, i, CardRecbuf.Cardshowfilename[i]); 
+          char filename[128]={0};
+          sprintf(filename, "file%d.t%d.txt=\"%s\"", page_num, i, CardRecbuf.Cardshowfilename[i]);
           LCD_SERIAL_2.printf(filename);
-          LCD_SERIAL_2.printf("\xff\xff\xff");         
+          LCD_SERIAL_2.printf("\xff\xff\xff");
         #endif
       }
       CardUpdate = false;
@@ -847,7 +847,7 @@
                 //sprintf(temp, "aux64_data.x%d.val=%d",showcount,(int)(bedlevel.z_values[x][y]*100)); //显示数据
                 sprintf(temp, "aux63_data.x%d.val=%d",showcount,(int)(bedlevel.z_values[x][y]*100)); //显示数据
                 LCD_SERIAL_2.printf(temp);
-                LCD_SERIAL_2.printf("\xff\xff\xff");              
+                LCD_SERIAL_2.printf("\xff\xff\xff");
               #elif ENABLED(NEPTUNE_3_PRO)
                 char temp[32] = {0};
                 sprintf(temp, "leveldata_36.x%d.val=%d",(int)showcount,(int)(bedlevel.z_values[x][y]*100)); //显示数据
@@ -865,15 +865,15 @@
     last_zoffset = zprobe_zoffset = probe.offset.z;
     #if ENABLED(RTS_AVAILABLE)
       RTS_SndData(zprobe_zoffset * 100, AUTO_BED_LEVEL_ZOFFSET_VP);
-      #if ENABLED(TJC_AVAILABLE) 
+      #if ENABLED(TJC_AVAILABLE)
         memset(temp,0,sizeof(temp));
         sprintf(temp, "leveldata.z_offset.val=%d", (int)(zprobe_zoffset * 100));
         LCD_SERIAL_2.printf(temp);
-        LCD_SERIAL_2.printf("\xff\xff\xff");           
+        LCD_SERIAL_2.printf("\xff\xff\xff");
       #endif
     #endif
     #if ENABLED(TJC_AVAILABLE)
-    
+
     #endif
     #if ENABLED(DUAL_X_CARRIAGE)
       RTS_SndData((hotend_offset[1].x - X2_MAX_POS) * 10, TWO_EXTRUDER_HOTEND_XOFFSET_VP);
@@ -893,7 +893,7 @@
       RTS_SndData(feedrate_percentage, PRINT_SPEED_RATE_VP);
     #endif
 
-    
+
     #if ENABLED(RTS_AVAILABLE)
       /***************turn off motor*****************/
       RTS_SndData(1, MOTOR_FREE_ICON_VP);
@@ -909,7 +909,7 @@
       #if ENABLED(DUAL_X_CARRIAGE)
       RTS_SndData(thermalManager.temp_hotend[1].celsius, HEAD1_CURRENT_TEMP_VP);
       #endif
-      
+
       /***************transmit Fan speed to screen*****************/
       // turn off fans
       thermalManager.set_fan_speed(0, 0);
@@ -933,13 +933,13 @@
 
         //主板软件版本
         memset(temp,0,sizeof(temp));
-        sprintf(temp, "information.sversion.txt=\"%s\"",SOFTVERSION); 
+        sprintf(temp, "information.sversion.txt=\"%s\"",SOFTVERSION);
         LCD_SERIAL_2.printf(temp);
         LCD_SERIAL_2.printf("\xff\xff\xff");
 
         //对应屏幕软件版本
         // memset(temp,0,sizeof(temp));
-        // sprintf(temp, "information.lversion.txt=\"%s\"",LCDVERSION); 
+        // sprintf(temp, "information.lversion.txt=\"%s\"",LCDVERSION);
         // LCD_SERIAL_2.printf(temp);
         // LCD_SERIAL_2.printf("\xff\xff\xff");
 
@@ -950,15 +950,15 @@
 
       //机型确认
       #if ENABLED(NEPTUNE_3_PLUS)
-        LCD_SERIAL_2.printf("main.va0.val=2");  
+        LCD_SERIAL_2.printf("main.va0.val=2");
         LCD_SERIAL_2.printf("\xff\xff\xff");
       #elif ENABLED(NEPTUNE_3_PRO)
-        LCD_SERIAL_2.printf("main.va0.val=1");  
-        LCD_SERIAL_2.printf("\xff\xff\xff");                  
-      #elif ENABLED(NEPTUNE_3_MAX)
-        LCD_SERIAL_2.printf("main.va0.val=3");  
+        LCD_SERIAL_2.printf("main.va0.val=1");
         LCD_SERIAL_2.printf("\xff\xff\xff");
-      #endif  
+      #elif ENABLED(NEPTUNE_3_MAX)
+        LCD_SERIAL_2.printf("main.va0.val=3");
+        LCD_SERIAL_2.printf("\xff\xff\xff");
+      #endif
 
       //EachMomentUpdate();
     #endif
@@ -1059,7 +1059,7 @@
   void EachMomentUpdate()
   {
     millis_t ms = millis();
-   
+
     if(ms > next_rts_update_ms)
     {
       #if ENABLED(POWER_LOSS_RECOVERY)
@@ -1073,7 +1073,7 @@
             uint8_t count_startprogress = 0;
             power_off_type_yes = 1;
 
-            #if ENABLED(RTS_AVAILABLE)  
+            #if ENABLED(RTS_AVAILABLE)
               rtscheck.RTS_SndData(ExchangePageBase, ExchangepageAddr);
               for(count_startprogress=0;count_startprogress<=100;count_startprogress++)
               {
@@ -1091,13 +1091,13 @@
                 LCD_SERIAL_2.printf("\xff\xff\xff");
 
                 #if ENABLED(NEPTUNE_3_PLUS)
-                  LCD_SERIAL_2.printf("main.va0.val=2");  
+                  LCD_SERIAL_2.printf("main.va0.val=2");
                   LCD_SERIAL_2.printf("\xff\xff\xff");
                 #elif ENABLED(NEPTUNE_3_PRO)
-                  LCD_SERIAL_2.printf("main.va0.val=1");  
-                  LCD_SERIAL_2.printf("\xff\xff\xff");                  
+                  LCD_SERIAL_2.printf("main.va0.val=1");
+                  LCD_SERIAL_2.printf("\xff\xff\xff");
                 #elif ENABLED(NEPTUNE_3_MAX)
-                  LCD_SERIAL_2.printf("main.va0.val=3");  
+                  LCD_SERIAL_2.printf("main.va0.val=3");
                   LCD_SERIAL_2.printf("\xff\xff\xff");
                 #endif
 
@@ -1105,15 +1105,15 @@
                 {
                   char send[16] ={0};
                   sprintf(send, "boot.j0.val=%d", count_startprogress);
-                  LCD_SERIAL_2.printf(send); 
+                  LCD_SERIAL_2.printf(send);
                   LCD_SERIAL_2.printf("\xff\xff\xff");
                   delay(30);
                   TERN_(USE_WATCHDOG, hal.watchdog_refresh(););
-                }          
+                }
 
-              #endif   
+              #endif
 
-              for(uint16_t i = 0;i < CardRecbuf.Filesum;i ++) 
+              for(uint16_t i = 0;i < CardRecbuf.Filesum;i ++)
               {
                 if(!strcmp(CardRecbuf.Cardfilename[i], &recovery.info.sd_filename[1]))
                 {
@@ -1132,8 +1132,8 @@
                     LCD_SERIAL_2.printf("\xff\xff\xff");
 
                     LCD_SERIAL_2.printf("page continueprint");
-                    LCD_SERIAL_2.printf("\xff\xff\xff");                                                       
-                  #endif 
+                    LCD_SERIAL_2.printf("\xff\xff\xff");
+                  #endif
 
                   // 图片预览
                   // #if ENABLED(TJC_AVAILABLE)
@@ -1142,7 +1142,7 @@
                   //   LCD_SERIAL_2.printf("\xff\xff\xff");
 
                   //   LCD_SERIAL_2.printf("printpause.cp0.aph=0");
-                  //   LCD_SERIAL_2.printf("\xff\xff\xff");          
+                  //   LCD_SERIAL_2.printf("\xff\xff\xff");
 
                   //   LCD_SERIAL_2.printf("printpause.va0.txt=\"\"");
                   //   LCD_SERIAL_2.printf("\xff\xff\xff");
@@ -1169,7 +1169,7 @@
 
                   //       memset(public_buf,0,sizeof(public_buf));
                   //       int16_t byte = file.read(public_buf, 512);
-                        
+
                   //       LCD_SERIAL_2.printf("printpause.va0.txt=");
                   //       LCD_SERIAL_2.write(0x22);
                   //       LCD_SERIAL_2.write(public_buf,sizeof(public_buf));
@@ -1178,8 +1178,8 @@
 
                   //       LCD_SERIAL_2.printf("printpause.va1.txt+=printpause.va0.txt");
                   //       LCD_SERIAL_2.printf("\xff\xff\xff");
-                              
-                  //       if(byte<=0) 
+
+                  //       if(byte<=0)
                   //       {
                   //         LCD_SERIAL_2.printf("printpause.cp0.aph=127");
                   //         LCD_SERIAL_2.printf("\xff\xff\xff");
@@ -1228,9 +1228,9 @@
                   //           LCD_SERIAL_2.printf("\xff\xff\xff");
                   //           break;
                   //         }
-                          
+
                   //         if(p1)
-                  //         { 
+                  //         {
                   //           while(1)
                   //           {
                   //             LCD_SERIAL_2.printf("printpause.va0.txt=\"\"");
@@ -1287,7 +1287,7 @@
                   //                     LCD_SERIAL_2.write(0x22);
                   //                     LCD_SERIAL_2.printf("\xff\xff\xff");
                   //                     LCD_SERIAL_2.printf("printpause.va1.txt+=printpause.va0.txt");
-                  //                     LCD_SERIAL_2.printf("\xff\xff\xff");                                     
+                  //                     LCD_SERIAL_2.printf("\xff\xff\xff");
 
                   //                     LCD_SERIAL_2.printf("printpause.cp0.aph=127");
                   //                     LCD_SERIAL_2.printf("\xff\xff\xff");
@@ -1337,7 +1337,7 @@
 
                   //     file.close();
                   //   }
-                  // #endif                  
+                  // #endif
 
                   break;
                 }
@@ -1366,13 +1366,13 @@
               LCD_SERIAL_2.printf("\xff\xff\xff");
 
               #if ENABLED(NEPTUNE_3_PLUS)
-                LCD_SERIAL_2.printf("main.va0.val=2");  
+                LCD_SERIAL_2.printf("main.va0.val=2");
                 LCD_SERIAL_2.printf("\xff\xff\xff");
               #elif ENABLED(NEPTUNE_3_PRO)
-                LCD_SERIAL_2.printf("main.va0.val=1");  
-                LCD_SERIAL_2.printf("\xff\xff\xff");                  
+                LCD_SERIAL_2.printf("main.va0.val=1");
+                LCD_SERIAL_2.printf("\xff\xff\xff");
               #elif ENABLED(NEPTUNE_3_MAX)
-                LCD_SERIAL_2.printf("main.va0.val=3");  
+                LCD_SERIAL_2.printf("main.va0.val=3");
                 LCD_SERIAL_2.printf("\xff\xff\xff");
               #endif
 
@@ -1381,7 +1381,7 @@
               {
                 char send[16]={0};
                 sprintf(send, "boot.j0.val=%d", count_startprogress);
-                LCD_SERIAL_2.printf(send); 
+                LCD_SERIAL_2.printf(send);
                 LCD_SERIAL_2.printf("\xff\xff\xff");
                 delay(30);
                 TERN_(USE_WATCHDOG, hal.watchdog_refresh());
@@ -1395,23 +1395,23 @@
 
             #endif
 
-            Update_Time_Value = RTS_UPDATE_VALUE;  
+            Update_Time_Value = RTS_UPDATE_VALUE;
           }
 
           #if ENABLED(TJC_AVAILABLE)
             #if ENABLED(POWER_LOSS_RECOVERY)
               if(recovery.enabled==0)
-              { 
+              {
                 LCD_SERIAL_2.printf("multiset.plrbutton.val=0");
-                LCD_SERIAL_2.printf("\xff\xff\xff"); 
+                LCD_SERIAL_2.printf("\xff\xff\xff");
               }
               else if(recovery.enabled==1)
               {
                 LCD_SERIAL_2.printf("multiset.plrbutton.val=1");
-                LCD_SERIAL_2.printf("\xff\xff\xff"); 
+                LCD_SERIAL_2.printf("\xff\xff\xff");
               }
-            #endif              
-          #endif               
+            #endif
+          #endif
         }
       #else
         if(flag_power_on)
@@ -1434,13 +1434,13 @@
             LCD_SERIAL_2.printf("\xff\xff\xff");
 
             #if ENABLED(NEPTUNE_3_PLUS)
-              LCD_SERIAL_2.printf("main.va0.val=2");  
+              LCD_SERIAL_2.printf("main.va0.val=2");
               LCD_SERIAL_2.printf("\xff\xff\xff");
             #elif ENABLED(NEPTUNE_3_PRO)
-              LCD_SERIAL_2.printf("main.va0.val=1");  
-              LCD_SERIAL_2.printf("\xff\xff\xff");                  
+              LCD_SERIAL_2.printf("main.va0.val=1");
+              LCD_SERIAL_2.printf("\xff\xff\xff");
             #elif ENABLED(NEPTUNE_3_MAX)
-              LCD_SERIAL_2.printf("main.va0.val=3");  
+              LCD_SERIAL_2.printf("main.va0.val=3");
               LCD_SERIAL_2.printf("\xff\xff\xff");
             #endif
 
@@ -1449,7 +1449,7 @@
             {
               char send[16]={0};
               sprintf(send, "boot.j0.val=%d", count_startprogress);
-              LCD_SERIAL_2.printf(send); 
+              LCD_SERIAL_2.printf(send);
               LCD_SERIAL_2.printf("\xff\xff\xff");
               delay(30);
               TERN_(USE_WATCHDOG, hal.watchdog_refresh());
@@ -1463,17 +1463,17 @@
           #if ENABLED(TJC_AVAILABLE)
             #if ENABLED(POWER_LOSS_RECOVERY)
               if(recovery.enabled==0)
-              { 
+              {
                 LCD_SERIAL_2.printf("multiset.plrbutton.val=0");
-                LCD_SERIAL_2.printf("\xff\xff\xff"); 
+                LCD_SERIAL_2.printf("\xff\xff\xff");
               }
               else if(recovery.enabled==1)
               {
                 LCD_SERIAL_2.printf("multiset.plrbutton.val=1");
-                LCD_SERIAL_2.printf("\xff\xff\xff"); 
+                LCD_SERIAL_2.printf("\xff\xff\xff");
               }
-            #endif              
-          #endif            
+            #endif
+          #endif
         }
       #endif
 
@@ -1484,7 +1484,7 @@
           {
             OUT_WRITE(LED2_PIN, LOW);
             status_led1 = false;
-            #if ENABLED(TJC_AVAILABLE) 
+            #if ENABLED(TJC_AVAILABLE)
               LCD_SERIAL_2.printf("status_led1=0");
               LCD_SERIAL_2.printf("\xff\xff\xff");
             #endif
@@ -1493,7 +1493,7 @@
           {
             OUT_WRITE(LED2_PIN, HIGH);
             status_led1 = true;
-            #if ENABLED(TJC_AVAILABLE) 
+            #if ENABLED(TJC_AVAILABLE)
               LCD_SERIAL_2.printf("status_led1=1");
               LCD_SERIAL_2.printf("\xff\xff\xff");
             #endif
@@ -1502,7 +1502,7 @@
           {
             OUT_WRITE(LED2_PIN, LOW);
             status_led1 = false;
-            #if ENABLED(TJC_AVAILABLE) 
+            #if ENABLED(TJC_AVAILABLE)
               LCD_SERIAL_2.printf("status_led1=0");
               LCD_SERIAL_2.printf("\xff\xff\xff");
             #endif
@@ -1515,23 +1515,23 @@
         if(enable_filment_check)
         {
           LCD_SERIAL_2.printf("set.va1.val=1");
-          LCD_SERIAL_2.printf("\xff\xff\xff");            
+          LCD_SERIAL_2.printf("\xff\xff\xff");
         }
         else
         {
           LCD_SERIAL_2.printf("set.va1.val=0");
-          LCD_SERIAL_2.printf("\xff\xff\xff");                 
+          LCD_SERIAL_2.printf("\xff\xff\xff");
         }
 
         if (thermalManager.fan_speed[0])
         {
           LCD_SERIAL_2.printf("set.va0.val=1");
-          LCD_SERIAL_2.printf("\xff\xff\xff");                
+          LCD_SERIAL_2.printf("\xff\xff\xff");
         }
         else
         {
           LCD_SERIAL_2.printf("set.va0.val=0");
-          LCD_SERIAL_2.printf("\xff\xff\xff");               
+          LCD_SERIAL_2.printf("\xff\xff\xff");
         }
 
       #endif
@@ -1539,16 +1539,16 @@
       #if ENABLED(TJC_AVAILABLE)
         #if ENABLED(POWER_LOSS_RECOVERY)
           if(recovery.enabled==0)
-          { 
+          {
             LCD_SERIAL_2.printf("multiset.plrbutton.val=0");
-            LCD_SERIAL_2.printf("\xff\xff\xff"); 
+            LCD_SERIAL_2.printf("\xff\xff\xff");
           }
           else if(recovery.enabled==1)
           {
             LCD_SERIAL_2.printf("multiset.plrbutton.val=1");
-            LCD_SERIAL_2.printf("\xff\xff\xff"); 
+            LCD_SERIAL_2.printf("\xff\xff\xff");
           }
-        #endif              
+        #endif
       #endif
 
       if(!flag_power_on)
@@ -1560,7 +1560,7 @@
         {
           duration_t elapsed = print_job_timer.duration();
 
-          #if ENABLED(RTS_AVAILABLE) 
+          #if ENABLED(RTS_AVAILABLE)
             rtscheck.RTS_SndData(elapsed.value / 3600, PRINT_TIME_HOUR_VP);
             rtscheck.RTS_SndData((elapsed.value % 3600) / 60, PRINT_TIME_MIN_VP);
           #endif
@@ -1572,7 +1572,7 @@
               Percentrecord = card.percentDone();
               if(Percentrecord <= 100)
               {
-                #if ENABLED(RTS_AVAILABLE) 
+                #if ENABLED(RTS_AVAILABLE)
                   rtscheck.RTS_SndData((unsigned char)Percentrecord, PRINT_PROCESS_ICON_VP);
                 #endif
               }
@@ -1587,10 +1587,10 @@
                   remain_time = elapsed.value / (Percentrecord * 0.01f) - elapsed.value;
                   next_remain_time_update += 20 * 1000UL;
 
-                  #if ENABLED(RTS_AVAILABLE) 
+                  #if ENABLED(RTS_AVAILABLE)
                     rtscheck.RTS_SndData(remain_time / 3600, PRINT_SURPLUS_TIME_HOUR_VP);
                     rtscheck.RTS_SndData((remain_time % 3600) / 60, PRINT_SURPLUS_TIME_MIN_VP);
-                  #endif                
+                  #endif
                 }
                 #if ENABLED(DUAL_X_CARRIAGE)
                 else if((0 != save_dual_x_carriage_mode) && (thermalManager.temp_hotend[0].celsius >= (thermalManager.temp_hotend[0].target - 5)) && (thermalManager.temp_hotend[1].celsius >= (thermalManager.temp_hotend[1].target - 5)))
@@ -1598,17 +1598,17 @@
                   remain_time = elapsed.value / (Percentrecord * 0.01f) - elapsed.value;
                   next_remain_time_update += 20 * 1000UL;
 
-                  #if ENABLED(RTS_AVAILABLE) 
+                  #if ENABLED(RTS_AVAILABLE)
                     rtscheck.RTS_SndData(remain_time / 3600, PRINT_SURPLUS_TIME_HOUR_VP);
                     rtscheck.RTS_SndData((remain_time % 3600) / 60, PRINT_SURPLUS_TIME_MIN_VP);
-                  #endif      
+                  #endif
                 }
                 #endif
               }
             }
             else
             {
-              #if ENABLED(RTS_AVAILABLE) 
+              #if ENABLED(RTS_AVAILABLE)
                 rtscheck.RTS_SndData(0, PRINT_PROCESS_ICON_VP);
                 rtscheck.RTS_SndData(0, PRINT_SURPLUS_TIME_HOUR_VP);
                 rtscheck.RTS_SndData(0, PRINT_SURPLUS_TIME_MIN_VP);
@@ -1617,10 +1617,10 @@
 
             last_cardpercentValue = card.percentDone();
 
-            #if ENABLED(RTS_AVAILABLE) 
+            #if ENABLED(RTS_AVAILABLE)
               rtscheck.RTS_SndData((unsigned char)card.percentDone(), PRINT_PROCESS_VP);
               rtscheck.RTS_SndData(10 * current_position[Z_AXIS], AXIS_Z_COORD_VP);
-            #endif 
+            #endif
           }
         }
 
@@ -1637,14 +1637,14 @@
           }*/
         }
 
-        #if ENABLED(RTS_AVAILABLE) 
+        #if ENABLED(RTS_AVAILABLE)
           rtscheck.RTS_SndData(thermalManager.temp_hotend[0].celsius, HEAD0_CURRENT_TEMP_VP);
           #if ENABLED(DUAL_X_CARRIAGE)
             rtscheck.RTS_SndData(thermalManager.temp_hotend[1].celsius, HEAD1_CURRENT_TEMP_VP);
           #endif
           rtscheck.RTS_SndData(thermalManager.temp_bed.celsius, BED_CURRENT_TEMP_VP);
 
-          #if ENABLED(TJC_AVAILABLE) 
+          #if ENABLED(TJC_AVAILABLE)
             //挤出头温度信息
             memset(temp,0,sizeof(temp));
             sprintf(temp, "main.nozzletemp.txt=\"%d / %d\"", thermalManager.wholeDegHotend(0) , thermalManager.degTargetHotend(0));
@@ -1661,13 +1661,13 @@
             memset(temp,0,sizeof(temp));
             sprintf(temp, "main.xvalue.val=%d", (int)(100 * current_position[X_AXIS]));
             LCD_SERIAL_2.printf(temp);
-            LCD_SERIAL_2.printf("\xff\xff\xff");  
+            LCD_SERIAL_2.printf("\xff\xff\xff");
 
             //Y轴坐标
             memset(temp,0,sizeof(temp));
             sprintf(temp, "main.yvalue.val=%d", (int)(100 * current_position[Y_AXIS]));
             LCD_SERIAL_2.printf(temp);
-            LCD_SERIAL_2.printf("\xff\xff\xff");  
+            LCD_SERIAL_2.printf("\xff\xff\xff");
 
             //首页-Z轴高度
             memset(temp,0,sizeof(temp));
@@ -1675,23 +1675,23 @@
             LCD_SERIAL_2.printf(temp);
             LCD_SERIAL_2.printf("\xff\xff\xff");
 
-            //打印中-Z轴高度  
+            //打印中-Z轴高度
             memset(temp,0,sizeof(temp));
             sprintf(temp, "printpause.zvalue.val=%d", (int)(10 * current_position[Z_AXIS]));
             LCD_SERIAL_2.printf(temp);
             LCD_SERIAL_2.printf("\xff\xff\xff");
 
-            //风扇速度         
+            //风扇速度
             memset(temp,0,sizeof(temp));
             sprintf(temp, "main.fanspeed.txt=\"%d\"", thermalManager.fan_speed[0]);
             LCD_SERIAL_2.printf(temp);
-            LCD_SERIAL_2.printf("\xff\xff\xff");              
+            LCD_SERIAL_2.printf("\xff\xff\xff");
           #endif
 
         #endif
 
         #if ENABLED(SDSUPPORT)
-        
+
           // if((sd_printing_autopause == true) && (PoweroffContinue == true))
           // {
           //   if(true == sdcard_pause_check)
@@ -1714,20 +1714,20 @@
           //       }
           //       sdcard_pause_check = false;
 
-          //       #if ENABLED(RTS_AVAILABLE) 
+          //       #if ENABLED(RTS_AVAILABLE)
           //         rtscheck.RTS_SndData(ExchangePageBase + 46, ExchangepageAddr);
-          //       #endif 
+          //       #endif
 
-          //       #if ENABLED(TJC_AVAILABLE)   
+          //       #if ENABLED(TJC_AVAILABLE)
 
-          //       #endif 
+          //       #endif
           //     }
           //   }
           // }
 
           if((false == sdcard_pause_check) && (false == card.isPrinting()) && !planner.has_blocks_queued())
           {
-            #if ENABLED(RTS_AVAILABLE) 
+            #if ENABLED(RTS_AVAILABLE)
               if(CardReader::flag.mounted)
               {
                 rtscheck.RTS_SndData(1, CHANGE_SDCARD_ICON_VP);
@@ -1738,9 +1738,9 @@
               }
             #endif
 
-            #if ENABLED(TJC_AVAILABLE)   
+            #if ENABLED(TJC_AVAILABLE)
 
-            #endif             
+            #endif
           }
         #endif
         #if ENABLED(DUAL_X_CARRIAGE)
@@ -1758,17 +1758,17 @@
             rtscheck.RTS_SndData(thermalManager.temp_hotend[0].target, HEAD0_SET_TEMP_VP);
             rtscheck.RTS_SndData(thermalManager.temp_bed.target, BED_SET_TEMP_VP);
           #endif
-          
-          #if ENABLED(TJC_AVAILABLE)   
 
-          #endif   
+          #if ENABLED(TJC_AVAILABLE)
+
+          #endif
 
           #if ENABLED(DUAL_X_CARRIAGE)
             thermalManager.setTargetHotend(thermalManager.temp_hotend[1].target, 1);
             last_target_temperature[1] = thermalManager.temp_hotend[1].target;
             rtscheck.RTS_SndData(thermalManager.temp_hotend[1].target, HEAD1_SET_TEMP_VP);
           #endif
-          
+
           last_target_temperature_bed = thermalManager.temp_bed.target;
         }
 
@@ -1778,17 +1778,17 @@
             if(printingIsPaused())
             {
               rtscheck.RTS_SndData(ExchangePageBase + 16, ExchangepageAddr); //新UI处理
-              #if ENABLED(TJC_AVAILABLE) 
+              #if ENABLED(TJC_AVAILABLE)
                 LCD_SERIAL_2.printf("page adjusttemp");
-                LCD_SERIAL_2.printf("\xff\xff\xff");               
+                LCD_SERIAL_2.printf("\xff\xff\xff");
               #endif
             }
             else
             {
               rtscheck.RTS_SndData(ExchangePageBase + 31, ExchangepageAddr); //新UI处理
-              #if ENABLED(TJC_AVAILABLE) 
+              #if ENABLED(TJC_AVAILABLE)
                 LCD_SERIAL_2.printf("page prefilament");
-                LCD_SERIAL_2.printf("\xff\xff\xff");               
+                LCD_SERIAL_2.printf("\xff\xff\xff");
               #endif
             }
             rtscheck.RTS_SndData(10 * Filament0LOAD, HEAD0_FILAMENT_LOAD_DATA_VP);
@@ -1803,18 +1803,18 @@
             if(printingIsPaused())
             {
               rtscheck.RTS_SndData(ExchangePageBase + 16, ExchangepageAddr); //新UI处理
-              #if ENABLED(TJC_AVAILABLE) 
+              #if ENABLED(TJC_AVAILABLE)
                 LCD_SERIAL_2.printf("page adjusttemp");
-                LCD_SERIAL_2.printf("\xff\xff\xff");               
+                LCD_SERIAL_2.printf("\xff\xff\xff");
               #endif
             }
             else
             {
               rtscheck.RTS_SndData(ExchangePageBase + 31, ExchangepageAddr); //新UI处理
-              #if ENABLED(TJC_AVAILABLE) 
+              #if ENABLED(TJC_AVAILABLE)
                 LCD_SERIAL_2.printf("page prefilament");
-                LCD_SERIAL_2.printf("\xff\xff\xff");               
-              #endif              
+                LCD_SERIAL_2.printf("\xff\xff\xff");
+              #endif
             }
             rtscheck.RTS_SndData(10 * Filament1LOAD, HEAD1_FILAMENT_LOAD_DATA_VP);
           #endif
@@ -1822,7 +1822,7 @@
           heatway = 0;
         }
       #endif
-        
+
         if(enable_filment_check)
         {
           #if ENABLED(CHECKFILEMENT)
@@ -1852,7 +1852,7 @@
               {
                 rtscheck.RTS_SndData(1, CHANGE_FILAMENT_ICON_VP);
               }
-              
+
             #else
 
               #if ENABLED(RTS_AVAILABLE)
@@ -1866,7 +1866,7 @@
                 }
               #endif
 
-              #if ENABLED(TJC_AVAILABLE) 
+              #if ENABLED(TJC_AVAILABLE)
 
               #endif
 
@@ -1878,7 +1878,7 @@
           rtscheck.RTS_SndData(AutoHomeIconNum ++, AUTO_HOME_DISPLAY_ICON_VP);
         #endif
 
-        #if ENABLED(TJC_AVAILABLE) 
+        #if ENABLED(TJC_AVAILABLE)
 
         #endif
 
@@ -1897,17 +1897,17 @@
     static bool start_update;
     static bool first_check = true;
     static uint32_t update_time;
-    
+
     rtscheck.RTS_SDCardUpate(); // Check the status of card
 
     if(enable_filment_check  && IS_SD_PRINTING())
     {
       #if ENABLED(CHECKFILEMENT)
-         
+
         // checking filement status during printing
         opos = npos;
         npos = planner.get_axis_position_mm(E_AXIS);
-        
+
         if((true == card.isPrinting()) && (true == PoweroffContinue) && (opos!=npos))
         {
           #if ENABLED(DUAL_X_CARRIAGE)
@@ -2018,9 +2018,9 @@
               else
               {
                 rtscheck.RTS_SndData(ExchangePageBase + 40, ExchangepageAddr);
-                #if ENABLED(TJC_AVAILABLE) 
+                #if ENABLED(TJC_AVAILABLE)
                   LCD_SERIAL_2.printf("page wait");
-                  LCD_SERIAL_2.printf("\xff\xff\xff");               
+                  LCD_SERIAL_2.printf("\xff\xff\xff");
                 #endif
                 waitway = 5;
 
@@ -2045,9 +2045,9 @@
 
                 #if ENABLED(RTS_AVAILABLE)
                   rtscheck.RTS_SndData(ExchangePageBase + 40, ExchangepageAddr);
-                  #if ENABLED(TJC_AVAILABLE) 
+                  #if ENABLED(TJC_AVAILABLE)
                   LCD_SERIAL_2.printf("page wait");
-                  LCD_SERIAL_2.printf("\xff\xff\xff");               
+                  LCD_SERIAL_2.printf("\xff\xff\xff");
                   #endif
                 #endif
 
@@ -2068,12 +2068,12 @@
                 Update_Time_Value  = 0;
                 sdcard_pause_check = false;
 
-                planner.synchronize();              
+                planner.synchronize();
               }
             #endif
           }
         }
-      
+
       #endif
     }
 
@@ -2127,9 +2127,9 @@
 
         #if ENABLED(RTS_AVAILABLE)
           rtscheck.RTS_SndData(ExchangePageBase + 1, ExchangepageAddr);
-          #if ENABLED(TJC_AVAILABLE) 
+          #if ENABLED(TJC_AVAILABLE)
               LCD_SERIAL_2.printf("page main");
-              LCD_SERIAL_2.printf("\xff\xff\xff");            
+              LCD_SERIAL_2.printf("\xff\xff\xff");
           #endif
         #endif
 
@@ -2154,10 +2154,10 @@
             LCD_SERIAL_2.printf("restFlag2=1");
             LCD_SERIAL_2.printf("\xff\xff\xff");
           #endif
-          abortSD_flag = true;  
+          abortSD_flag = true;
         }
       }
-    #endif    
+    #endif
   }
 
   void RTS_AutoBedLevelPage()
@@ -2182,7 +2182,7 @@
           LCD_SERIAL_2.printf("page leveldata_36");
           LCD_SERIAL_2.printf("\xff\xff\xff");
           LCD_SERIAL_2.printf("leveling_36.tm0.en=0");
-          LCD_SERIAL_2.printf("\xff\xff\xff");        
+          LCD_SERIAL_2.printf("\xff\xff\xff");
         #elif ENABLED(NEPTUNE_3_MAX)
           //LCD_SERIAL_2.printf("page leveldata_64");
           //LCD_SERIAL_2.printf("page aux64_data");
@@ -2190,14 +2190,14 @@
           LCD_SERIAL_2.printf("\xff\xff\xff");
           //LCD_SERIAL_2.printf("leveling_64.tm0.en=0");
           LCD_SERIAL_2.printf("leveling_63.tm0.en=0");
-          LCD_SERIAL_2.printf("\xff\xff\xff"); 
+          LCD_SERIAL_2.printf("\xff\xff\xff");
         #endif
 
         LCD_SERIAL_2.printf("leveling.tm0.en=0");
         LCD_SERIAL_2.printf("\xff\xff\xff");
 
         LCD_SERIAL_2.printf("page warn_zoffset");
-        LCD_SERIAL_2.printf("\xff\xff\xff");               
+        LCD_SERIAL_2.printf("\xff\xff\xff");
       #endif
     }
   }
@@ -2209,10 +2209,10 @@
       waitway = 0;
       #if ENABLED(RTS_AVAILABLE)
         rtscheck.RTS_SndData(ExchangePageBase + 29 + (AxisUnitMode - 1), ExchangepageAddr);
-        #if ENABLED(TJC_AVAILABLE) 
+        #if ENABLED(TJC_AVAILABLE)
           LCD_SERIAL_2.printf("page premove");
-          LCD_SERIAL_2.printf("\xff\xff\xff");               
-        #endif        
+          LCD_SERIAL_2.printf("\xff\xff\xff");
+        #endif
       #endif
     }
     else if(waitway == 6)
@@ -2226,7 +2226,7 @@
           rtscheck.RTS_SndData(ExchangePageBase + 28, ExchangepageAddr);
         #endif
       #endif
-      
+
       #if ENABLED(TJC_AVAILABLE)
 
         #if ENABLED(NEPTUNE_3_PLUS)
@@ -2234,12 +2234,12 @@
           LCD_SERIAL_2.printf("page aux49_data");
           LCD_SERIAL_2.printf("\xff\xff\xff");
           LCD_SERIAL_2.printf("leveling_49.tm0.en=0");
-          LCD_SERIAL_2.printf("\xff\xff\xff");  
+          LCD_SERIAL_2.printf("\xff\xff\xff");
         #elif ENABLED(NEPTUNE_3_PRO)
           LCD_SERIAL_2.printf("page leveldata_36");
           LCD_SERIAL_2.printf("\xff\xff\xff");
           LCD_SERIAL_2.printf("leveling_36.tm0.en=0");
-          LCD_SERIAL_2.printf("\xff\xff\xff");  
+          LCD_SERIAL_2.printf("\xff\xff\xff");
         #elif ENABLED(NEPTUNE_3_MAX)
           //LCD_SERIAL_2.printf("page leveldata_64");
           //LCD_SERIAL_2.printf("page aux64_data");
@@ -2247,12 +2247,12 @@
           LCD_SERIAL_2.printf("\xff\xff\xff");
           //LCD_SERIAL_2.printf("leveling_64.tm0.en=0");
           LCD_SERIAL_2.printf("leveling_63.tm0.en=0");
-          LCD_SERIAL_2.printf("\xff\xff\xff");  
+          LCD_SERIAL_2.printf("\xff\xff\xff");
         #endif
 
         LCD_SERIAL_2.printf("leveling.tm0.en=0");
-        LCD_SERIAL_2.printf("\xff\xff\xff");  
-      #endif      
+        LCD_SERIAL_2.printf("\xff\xff\xff");
+      #endif
     }
     else if(waitway == 7)
     {
@@ -2261,9 +2261,9 @@
 
       #if ENABLED(RTS_AVAILABLE)
         rtscheck.RTS_SndData(ExchangePageBase + 1, ExchangepageAddr);
-        #if ENABLED(TJC_AVAILABLE) 
+        #if ENABLED(TJC_AVAILABLE)
             LCD_SERIAL_2.printf("page main");
-            LCD_SERIAL_2.printf("\xff\xff\xff");            
+            LCD_SERIAL_2.printf("\xff\xff\xff");
         #endif
       #endif
 
@@ -2271,7 +2271,7 @@
 
       #if ENABLED(TJC_AVAILABLE)
 
-      #endif   
+      #endif
     }
 
     #if ENABLED(RTS_AVAILABLE)
@@ -2374,7 +2374,7 @@
           RTS_SndData(0, PRINT_SURPLUS_TIME_HOUR_VP);
           RTS_SndData(0, PRINT_SURPLUS_TIME_MIN_VP);
           RTS_SndData(ExchangePageBase + 1, ExchangepageAddr);
-          
+
           #if ENABLED(TJC_AVAILABLE)
             Move_finish_flag = false;
           #endif
@@ -2453,11 +2453,11 @@
         {
           CardUpdate = true;
           CardRecbuf.recordcount = -1;
-          RTS_SDCardUpate();            
+          RTS_SDCardUpate();
         }
       }
       break;
- 
+
       case AdjustmentKey: //0x1004
       {
         if(recdat.data[0] == 1)
@@ -2480,8 +2480,8 @@
             LCD_SERIAL_2.printf("\xff\xff\xff");
 
             LCD_SERIAL_2.printf("adjusttemp.va1.val=3");  //默认单位调整为10
-            LCD_SERIAL_2.printf("\xff\xff\xff");                       
-          #endif 
+            LCD_SERIAL_2.printf("\xff\xff\xff");
+          #endif
 
         }
         else if(recdat.data[0] == 2)
@@ -2551,9 +2551,9 @@
           RTS_SndData(0, ICON_ADJUST_PRINTING_EXTRUDER_OR_BED); //默认为喷头界面
           RTS_SndData(2, ICON_ADJUST_PRINTING_TEMP_UNIT);       //默认单位调整为10
           RTS_SndData(ExchangePageBase + 16, ExchangepageAddr);
-          #if ENABLED(TJC_AVAILABLE) 
+          #if ENABLED(TJC_AVAILABLE)
             LCD_SERIAL_2.printf("page adjusttemp");
-            LCD_SERIAL_2.printf("\xff\xff\xff");           
+            LCD_SERIAL_2.printf("\xff\xff\xff");
           #endif
         }
         else if(recdat.data[0] == 6)
@@ -2565,70 +2565,70 @@
           RTS_SndData(2, ICON_ADJUST_PRINTING_S_F_UNIT);   //默认单位调整为10
           RTS_SndData(ExchangePageBase + 17, ExchangepageAddr);
 
-          #if ENABLED(TJC_AVAILABLE) 
+          #if ENABLED(TJC_AVAILABLE)
             memset(temp,0,sizeof(temp));
             sprintf(temp, "adjustspeed.targetspeed.val=%d", (int)(feedrate_percentage));
             LCD_SERIAL_2.printf(temp);
-            LCD_SERIAL_2.printf("\xff\xff\xff");           
+            LCD_SERIAL_2.printf("\xff\xff\xff");
 
             LCD_SERIAL_2.printf("page adjustspeed");
-            LCD_SERIAL_2.printf("\xff\xff\xff");            
+            LCD_SERIAL_2.printf("\xff\xff\xff");
           #endif
         }
         else if(recdat.data[0] == 7)
         {
           zoffset_unit = 0.1;
-          #if ENABLED(TJC_AVAILABLE) 
+          #if ENABLED(TJC_AVAILABLE)
             LCD_SERIAL_2.printf("adjustzoffset.zoffset_value.val=2");
-            LCD_SERIAL_2.printf("\xff\xff\xff");          
+            LCD_SERIAL_2.printf("\xff\xff\xff");
           #endif
-          
+
           RTS_SndData(1, ICON_ADJUST_Z_OFFSET_UNIT); //默认单位为0.1mm
           RTS_SndData(1, ICON_LEVEL_SELECT);         //默认单位为0.1mm
           RTS_SndData(ExchangePageBase + 18, ExchangepageAddr);
 
-          #if ENABLED(TJC_AVAILABLE) 
+          #if ENABLED(TJC_AVAILABLE)
             memset(temp,0,sizeof(temp));
             sprintf(temp, "adjustzoffset.z_offset.val=%d", (int)(probe.offset.z * 100));
             LCD_SERIAL_2.printf(temp);
-            LCD_SERIAL_2.printf("\xff\xff\xff");   
+            LCD_SERIAL_2.printf("\xff\xff\xff");
 
             LCD_SERIAL_2.printf("page adjustzoffset");
-            LCD_SERIAL_2.printf("\xff\xff\xff");              
+            LCD_SERIAL_2.printf("\xff\xff\xff");
           #endif
         }
         else if(recdat.data[0] == 8)
         {
-          #if ENABLED(TJC_AVAILABLE) 
+          #if ENABLED(TJC_AVAILABLE)
             feedrate_percentage = 100;
             memset(temp,0,sizeof(temp));
             sprintf(temp, "adjustspeed.targetspeed.val=%d", (int)(feedrate_percentage));
             LCD_SERIAL_2.printf(temp);
-            LCD_SERIAL_2.printf("\xff\xff\xff");  
+            LCD_SERIAL_2.printf("\xff\xff\xff");
           #endif
         }
         else if(recdat.data[0] == 9)
         {
           #if ENABLED(TJC_AVAILABLE)
-            planner.flow_percentage[0] = 100; 
+            planner.flow_percentage[0] = 100;
             planner.refresh_e_factor(0);
             memset(temp,0,sizeof(temp));
             sprintf(temp, "adjustspeed.targetspeed.val=%d", (int)(planner.flow_percentage[0]));
             LCD_SERIAL_2.printf(temp);
-            LCD_SERIAL_2.printf("\xff\xff\xff");           
-          #endif   
+            LCD_SERIAL_2.printf("\xff\xff\xff");
+          #endif
         }
         else if(recdat.data[0] == 0x0A)
         {
           thermalManager.fan_speed[0] = 255;
-          #if ENABLED(TJC_AVAILABLE) 
+          #if ENABLED(TJC_AVAILABLE)
             memset(temp,0,sizeof(temp));
             sprintf(temp, "adjustspeed.targetspeed.val=%d", (int)(thermalManager.fan_speed[0]));
             LCD_SERIAL_2.printf(temp);
-            LCD_SERIAL_2.printf("\xff\xff\xff");           
-          #endif             
+            LCD_SERIAL_2.printf("\xff\xff\xff");
+          #endif
         }
-                
+
       }
       break;
 
@@ -2646,9 +2646,9 @@
           if(!Home_stop_flag)
           {
             RTS_SndData(ExchangePageBase + 40, ExchangepageAddr);
-            #if ENABLED(TJC_AVAILABLE) 
+            #if ENABLED(TJC_AVAILABLE)
               LCD_SERIAL_2.printf("page wait");
-              LCD_SERIAL_2.printf("\xff\xff\xff");               
+              LCD_SERIAL_2.printf("\xff\xff\xff");
             #endif
 
             RTS_SndData(0, PRINT_TIME_HOUR_VP);
@@ -2667,7 +2667,7 @@
             #if ENABLED(TJC_AVAILABLE)
                 LCD_SERIAL_2.printf("page printpause");
                 LCD_SERIAL_2.printf("\xff\xff\xff");
-            #endif            
+            #endif
           }
           else if(sdcard_pause_check == false)
           {
@@ -2675,7 +2675,7 @@
             #if ENABLED(TJC_AVAILABLE)
                 LCD_SERIAL_2.printf("page printpause");
                 LCD_SERIAL_2.printf("\xff\xff\xff");
-            #endif  
+            #endif
           }
           else
           {
@@ -2683,7 +2683,7 @@
             #if ENABLED(TJC_AVAILABLE)
                 LCD_SERIAL_2.printf("page printpause");
                 LCD_SERIAL_2.printf("\xff\xff\xff");
-            #endif  
+            #endif
           }
         }
       }
@@ -2702,9 +2702,9 @@
           LCD_SERIAL_2.printf("\xff\xff\xff");
 
           RTS_SndData(ExchangePageBase + 40, ExchangepageAddr);
-          #if ENABLED(TJC_AVAILABLE) 
+          #if ENABLED(TJC_AVAILABLE)
             LCD_SERIAL_2.printf("page wait");
-            LCD_SERIAL_2.printf("\xff\xff\xff");               
+            LCD_SERIAL_2.printf("\xff\xff\xff");
           #endif
 
           //reject to receive cmd
@@ -2729,7 +2729,7 @@
           {
             #if ENABLED(TJC_AVAILABLE)
               LCD_SERIAL_2.printf("page pauseconfirm");
-              LCD_SERIAL_2.printf("\xff\xff\xff");  
+              LCD_SERIAL_2.printf("\xff\xff\xff");
             #endif
           }
         }
@@ -2774,7 +2774,7 @@
                   if(0 == READ(CHECKFILEMENT0_PIN))
                   {
                     RTS_SndData(ExchangePageBase + 39, ExchangepageAddr);
-                  }                  
+                  }
                 }
               #endif
             #endif
@@ -2785,9 +2785,9 @@
           LCD_SERIAL_2.printf("\xff\xff\xff");
 
           RTS_SndData(ExchangePageBase + 40, ExchangepageAddr);
-          #if ENABLED(TJC_AVAILABLE) 
+          #if ENABLED(TJC_AVAILABLE)
             LCD_SERIAL_2.printf("page wait");
-            LCD_SERIAL_2.printf("\xff\xff\xff");               
+            LCD_SERIAL_2.printf("\xff\xff\xff");
           #endif
 
           //char pause_str_Z[16];
@@ -2812,7 +2812,7 @@
           //card.startOrResumeFilePrinting();
           //print_job_timer.start();
 
-          if (ExtUI::isPrintingFromMediaPaused()) 
+          if (ExtUI::isPrintingFromMediaPaused())
           {
             nozzle_park_mks.print_pause_start_flag = 0;
             nozzle_park_mks.blstatus = true;
@@ -2826,7 +2826,7 @@
           #if ENABLED(TJC_AVAILABLE)
             LCD_SERIAL_2.printf("page printpause");
             LCD_SERIAL_2.printf("\xff\xff\xff");
-          #endif 
+          #endif
           }
           else if(recdat.data[0] == 2)
           {
@@ -2893,9 +2893,9 @@
                   {
                     RTS_SndData(ExchangePageBase + 40, ExchangepageAddr);
 
-                    #if ENABLED(TJC_AVAILABLE) 
+                    #if ENABLED(TJC_AVAILABLE)
                       LCD_SERIAL_2.printf("page wait");
-                      LCD_SERIAL_2.printf("\xff\xff\xff");               
+                      LCD_SERIAL_2.printf("\xff\xff\xff");
                     #endif
 
                     //char pause_str_Z[16];
@@ -2917,7 +2917,7 @@
                     //card.startOrResumeFilePrinting();
 
                     ExtUI::resumePrint();
-                    
+
                     print_job_timer.start();
                     Update_Time_Value = 0;
                     sdcard_pause_check = true;
@@ -2926,7 +2926,7 @@
                     #if ENABLED(TJC_AVAILABLE)
                       LCD_SERIAL_2.printf("page printpause");
                       LCD_SERIAL_2.printf("\xff\xff\xff");
-                    #endif 
+                    #endif
                   }
                 }
             #endif
@@ -2975,16 +2975,16 @@
                   else if(1 == READ(CHECKFILEMENT0_PIN))
                   {
                     RTS_SndData(1, CHANGE_FILAMENT_ICON_VP);
-                  }                  
+                  }
                 }
                 #endif
               #endif
             }
             RTS_M600_Flag = false;
             RTS_SndData(ExchangePageBase + 8, ExchangepageAddr);
-            #if ENABLED(TJC_AVAILABLE) 
+            #if ENABLED(TJC_AVAILABLE)
               LCD_SERIAL_2.printf("page filamentresume");
-              LCD_SERIAL_2.printf("\xff\xff\xff");               
+              LCD_SERIAL_2.printf("\xff\xff\xff");
             #endif
           }
           else if(PoweroffContinue == false)
@@ -3042,7 +3042,7 @@
               LCD_SERIAL_2.printf("\xff\xff\xff");
 
               LCD_SERIAL_2.printf("printpause.cp0.aph=0");
-              LCD_SERIAL_2.printf("\xff\xff\xff");          
+              LCD_SERIAL_2.printf("\xff\xff\xff");
 
               LCD_SERIAL_2.printf("printpause.va0.txt=\"\"");
               LCD_SERIAL_2.printf("\xff\xff\xff");
@@ -3069,7 +3069,7 @@
 
                   memset(public_buf,0,sizeof(public_buf));
                   int16_t byte = file.read(public_buf, 512);
-                  
+
                   LCD_SERIAL_2.printf("printpause.va0.txt=");
                   LCD_SERIAL_2.write(0x22);
                   LCD_SERIAL_2.write(public_buf,sizeof(public_buf));
@@ -3078,8 +3078,8 @@
 
                   LCD_SERIAL_2.printf("printpause.va1.txt+=printpause.va0.txt");
                   LCD_SERIAL_2.printf("\xff\xff\xff");
-                        
-                  if(byte<=0) 
+
+                  if(byte<=0)
                   {
                     LCD_SERIAL_2.printf("printpause.cp0.aph=127");
                     LCD_SERIAL_2.printf("\xff\xff\xff");
@@ -3129,9 +3129,9 @@
                       LCD_SERIAL_2.printf("\xff\xff\xff");
                       break;
                     }
-                    
+
                     if(p1)
-                    { 
+                    {
                       while(1)
                       {
                         LCD_SERIAL_2.printf("printpause.va0.txt=\"\"");
@@ -3190,7 +3190,7 @@
                                 LCD_SERIAL_2.write(0x22);
                                 LCD_SERIAL_2.printf("\xff\xff\xff");
                                 LCD_SERIAL_2.printf("printpause.va1.txt+=printpause.va0.txt");
-                                LCD_SERIAL_2.printf("\xff\xff\xff");                                     
+                                LCD_SERIAL_2.printf("\xff\xff\xff");
 
                                 LCD_SERIAL_2.printf("printpause.cp0.aph=127");
                                 LCD_SERIAL_2.printf("\xff\xff\xff");
@@ -3248,22 +3248,22 @@
             delay(2);
             #if ENABLED(BABYSTEPPING)
               RTS_SndData(0, AUTO_BED_LEVEL_ZOFFSET_VP);
-              #if ENABLED(TJC_AVAILABLE) 
+              #if ENABLED(TJC_AVAILABLE)
                 memset(temp,0,sizeof(temp));
                 sprintf(temp, "leveldata.z_offset.val=%d", 0);
                 LCD_SERIAL_2.printf(temp);
-                LCD_SERIAL_2.printf("\xff\xff\xff");           
+                LCD_SERIAL_2.printf("\xff\xff\xff");
               #endif
             #endif
             feedrate_percentage = 100;
             RTS_SndData(feedrate_percentage, PRINT_SPEED_RATE_VP);
             zprobe_zoffset = last_zoffset;
             RTS_SndData(zprobe_zoffset * 100, AUTO_BED_LEVEL_ZOFFSET_VP);
-            #if ENABLED(TJC_AVAILABLE) 
+            #if ENABLED(TJC_AVAILABLE)
               memset(temp,0,sizeof(temp));
               sprintf(temp, "leveldata.z_offset.val=%d", (int)(zprobe_zoffset * 100));
               LCD_SERIAL_2.printf(temp);
-              LCD_SERIAL_2.printf("\xff\xff\xff");           
+              LCD_SERIAL_2.printf("\xff\xff\xff");
             #endif
             PoweroffContinue = true;
 
@@ -3288,9 +3288,9 @@
           else
           {
             RTS_SndData(ExchangePageBase + 40, ExchangepageAddr);
-            #if ENABLED(TJC_AVAILABLE) 
+            #if ENABLED(TJC_AVAILABLE)
              LCD_SERIAL_2.printf("page wait");
-             LCD_SERIAL_2.printf("\xff\xff\xff");               
+             LCD_SERIAL_2.printf("\xff\xff\xff");
             #endif
             //char pause_str_Z[16];
             //char pause_str_E[16];
@@ -3316,7 +3316,7 @@
             #if ENABLED(TJC_AVAILABLE)
               LCD_SERIAL_2.printf("page printpause");
               LCD_SERIAL_2.printf("\xff\xff\xff");
-            #endif             
+            #endif
           }
         }
       }
@@ -3355,29 +3355,29 @@
           RTS_SndData(thermalManager.temp_hotend[0].target, SPEED_SET_VP);
           RTS_SndData(thermalManager.temp_hotend[0].target, HEAD0_SET_TEMP_VP);
 
-          #if ENABLED(TJC_AVAILABLE) 
+          #if ENABLED(TJC_AVAILABLE)
             memset(temp,0,sizeof(temp));
             sprintf(temp, "adjusttemp.targettemp.val=%d", (int)(thermalManager.temp_hotend[0].target));
             LCD_SERIAL_2.printf(temp);
-            LCD_SERIAL_2.printf("\xff\xff\xff");           
-          #endif     
+            LCD_SERIAL_2.printf("\xff\xff\xff");
+          #endif
         }
         else if (recdat.data[0] == 2)
         {
-        
+
         }
         else if (recdat.data[0] == 3)
-        {          
-          temp_ctrl = 0; 
+        {
+          temp_ctrl = 0;
           RTS_SndData(1, ICON_ADJUST_PRINTING_EXTRUDER_OR_BED);
           RTS_SndData(thermalManager.temp_bed.target, SPEED_SET_VP);
 
-          #if ENABLED(TJC_AVAILABLE) 
+          #if ENABLED(TJC_AVAILABLE)
             memset(temp,0,sizeof(temp));
             sprintf(temp, "adjusttemp.targettemp.val=%d", (int)(thermalManager.temp_bed.target));
             LCD_SERIAL_2.printf(temp);
-            LCD_SERIAL_2.printf("\xff\xff\xff");           
-          #endif 
+            LCD_SERIAL_2.printf("\xff\xff\xff");
+          #endif
         }
         else if (recdat.data[0] == 4)
         {
@@ -3412,7 +3412,7 @@
           AxisUnitMode = 3;
           axis_unit    = 10.0;
           RTS_SndData(2, ICON_MOVE_DISTANCE_SELECT);
-        } 
+        }
         else if (recdat.data[0] == 8) //++温度
         {
           if(temp_ctrl)
@@ -3429,12 +3429,12 @@
             RTS_SndData(thermalManager.temp_hotend[0].target, HEAD0_SET_TEMP_VP);
             RTS_SndData(thermalManager.temp_hotend[0].target, SPEED_SET_VP);
 
-            #if ENABLED(TJC_AVAILABLE) 
+            #if ENABLED(TJC_AVAILABLE)
               memset(temp,0,sizeof(temp));
               sprintf(temp, "adjusttemp.targettemp.val=%d", (int)(thermalManager.temp_hotend[0].target));
               LCD_SERIAL_2.printf(temp);
-              LCD_SERIAL_2.printf("\xff\xff\xff");           
-            #endif            
+              LCD_SERIAL_2.printf("\xff\xff\xff");
+            #endif
 
           }
           else
@@ -3451,12 +3451,12 @@
               RTS_SndData(thermalManager.temp_bed.target, SPEED_SET_VP);
             }
 
-            #if ENABLED(TJC_AVAILABLE) 
+            #if ENABLED(TJC_AVAILABLE)
               memset(temp,0,sizeof(temp));
               sprintf(temp, "adjusttemp.targettemp.val=%d", (int)(thermalManager.temp_bed.target));
               LCD_SERIAL_2.printf(temp);
-              LCD_SERIAL_2.printf("\xff\xff\xff");           
-            #endif 
+              LCD_SERIAL_2.printf("\xff\xff\xff");
+            #endif
           }
         }
         else if (recdat.data[0] == 9)  //--温度
@@ -3471,12 +3471,12 @@
               RTS_SndData(thermalManager.temp_hotend[0].target, SPEED_SET_VP);
             }
 
-            #if ENABLED(TJC_AVAILABLE) 
+            #if ENABLED(TJC_AVAILABLE)
               memset(temp,0,sizeof(temp));
               sprintf(temp, "adjusttemp.targettemp.val=%d", (int)(thermalManager.temp_hotend[0].target));
               LCD_SERIAL_2.printf(temp);
-              LCD_SERIAL_2.printf("\xff\xff\xff");           
-            #endif   
+              LCD_SERIAL_2.printf("\xff\xff\xff");
+            #endif
           }
           else
           {
@@ -3488,12 +3488,12 @@
               RTS_SndData(thermalManager.temp_bed.target, SPEED_SET_VP);
             }
 
-            #if ENABLED(TJC_AVAILABLE) 
+            #if ENABLED(TJC_AVAILABLE)
               memset(temp,0,sizeof(temp));
               sprintf(temp, "adjusttemp.targettemp.val=%d", (int)(thermalManager.temp_bed.target));
               LCD_SERIAL_2.printf(temp);
-              LCD_SERIAL_2.printf("\xff\xff\xff");           
-            #endif 
+              LCD_SERIAL_2.printf("\xff\xff\xff");
+            #endif
           }
         }
         else if(recdat.data[0] == 0x0A)
@@ -3502,37 +3502,37 @@
           RTS_SndData(feedrate_percentage, SPEED_SET_VP);
           speed_ctrl = 1;
 
-          #if ENABLED(TJC_AVAILABLE) 
+          #if ENABLED(TJC_AVAILABLE)
             memset(temp,0,sizeof(temp));
             sprintf(temp, "adjustspeed.targetspeed.val=%d", (int)(feedrate_percentage));
             LCD_SERIAL_2.printf(temp);
-            LCD_SERIAL_2.printf("\xff\xff\xff");           
-          #endif 
-        } 
+            LCD_SERIAL_2.printf("\xff\xff\xff");
+          #endif
+        }
         else if(recdat.data[0] == 0x0B)
         {
           RTS_SndData(1, ICON_ADJUST_PRINTING_SPEED_FLOW);
           RTS_SndData(planner.flow_percentage[0], SPEED_SET_VP);
           speed_ctrl = 2;
 
-          #if ENABLED(TJC_AVAILABLE) 
+          #if ENABLED(TJC_AVAILABLE)
             memset(temp,0,sizeof(temp));
             sprintf(temp, "adjustspeed.targetspeed.val=%d", (int)(planner.flow_percentage[0]));
             LCD_SERIAL_2.printf(temp);
-            LCD_SERIAL_2.printf("\xff\xff\xff");           
-          #endif 
+            LCD_SERIAL_2.printf("\xff\xff\xff");
+          #endif
         }
         else if(recdat.data[0] == 0x0C)
         {
           RTS_SndData(2, ICON_ADJUST_PRINTING_SPEED_FLOW);
           RTS_SndData(thermalManager.fan_speed[0], SPEED_SET_VP);
           speed_ctrl = 3;
-          #if ENABLED(TJC_AVAILABLE) 
+          #if ENABLED(TJC_AVAILABLE)
             memset(temp,0,sizeof(temp));
             sprintf(temp, "adjustspeed.targetspeed.val=%d", (int)(thermalManager.fan_speed[0]));
             LCD_SERIAL_2.printf(temp);
-            LCD_SERIAL_2.printf("\xff\xff\xff");           
-          #endif 
+            LCD_SERIAL_2.printf("\xff\xff\xff");
+          #endif
         }
         else if(recdat.data[0] == 0x0D)
         {
@@ -3548,12 +3548,12 @@
             }
             RTS_SndData(feedrate_percentage, SPEED_SET_VP);
 
-            #if ENABLED(TJC_AVAILABLE) 
+            #if ENABLED(TJC_AVAILABLE)
               memset(temp,0,sizeof(temp));
               sprintf(temp, "adjustspeed.targetspeed.val=%d", (int)(feedrate_percentage));
               LCD_SERIAL_2.printf(temp);
-              LCD_SERIAL_2.printf("\xff\xff\xff");           
-            #endif 
+              LCD_SERIAL_2.printf("\xff\xff\xff");
+            #endif
           }
           else if(speed_ctrl==2)
           {
@@ -3561,19 +3561,19 @@
             {
               planner.flow_percentage[0] = 150;
             }
-            else 
+            else
             {
               planner.flow_percentage[0] = (planner.flow_percentage[0] + unit);
             }
             planner.refresh_e_factor(0);
             RTS_SndData(planner.flow_percentage[0], SPEED_SET_VP);
 
-            #if ENABLED(TJC_AVAILABLE) 
+            #if ENABLED(TJC_AVAILABLE)
               memset(temp,0,sizeof(temp));
               sprintf(temp, "adjustspeed.targetspeed.val=%d", (int)(planner.flow_percentage[0]));
               LCD_SERIAL_2.printf(temp);
-              LCD_SERIAL_2.printf("\xff\xff\xff");           
-            #endif 
+              LCD_SERIAL_2.printf("\xff\xff\xff");
+            #endif
           }
           else if(speed_ctrl==3)
           {
@@ -3588,11 +3588,11 @@
             thermalManager.set_fan_speed(0, thermalManager.fan_speed[0]);
             RTS_SndData(thermalManager.fan_speed[0], SPEED_SET_VP);
 
-            #if ENABLED(TJC_AVAILABLE) 
+            #if ENABLED(TJC_AVAILABLE)
               memset(temp,0,sizeof(temp));
               sprintf(temp, "adjustspeed.targetspeed.val=%d", (int)(thermalManager.fan_speed[0]));
               LCD_SERIAL_2.printf(temp);
-              LCD_SERIAL_2.printf("\xff\xff\xff");           
+              LCD_SERIAL_2.printf("\xff\xff\xff");
             #endif
           }
         }
@@ -3609,12 +3609,12 @@
               feedrate_percentage = (feedrate_percentage - unit);
             }
             RTS_SndData(feedrate_percentage, SPEED_SET_VP);
-            #if ENABLED(TJC_AVAILABLE) 
+            #if ENABLED(TJC_AVAILABLE)
               memset(temp,0,sizeof(temp));
               sprintf(temp, "adjustspeed.targetspeed.val=%d", (int)(feedrate_percentage));
               LCD_SERIAL_2.printf(temp);
-              LCD_SERIAL_2.printf("\xff\xff\xff");           
-            #endif 
+              LCD_SERIAL_2.printf("\xff\xff\xff");
+            #endif
           }
           else if(speed_ctrl==2)
           {
@@ -3622,18 +3622,18 @@
             {
               planner.flow_percentage[0] = 50;
             }
-            else 
+            else
             {
               planner.flow_percentage[0] = (planner.flow_percentage[0] - unit);
             }
             planner.refresh_e_factor(0);
             RTS_SndData(planner.flow_percentage[0], SPEED_SET_VP);
-            #if ENABLED(TJC_AVAILABLE) 
+            #if ENABLED(TJC_AVAILABLE)
               memset(temp,0,sizeof(temp));
               sprintf(temp, "adjustspeed.targetspeed.val=%d", (int)(planner.flow_percentage[0]));
               LCD_SERIAL_2.printf(temp);
-              LCD_SERIAL_2.printf("\xff\xff\xff");           
-            #endif             
+              LCD_SERIAL_2.printf("\xff\xff\xff");
+            #endif
           }
           else if(speed_ctrl==3)
           {
@@ -3647,11 +3647,11 @@
             }
             thermalManager.set_fan_speed(0, thermalManager.fan_speed[0]);
             RTS_SndData(thermalManager.fan_speed[0], SPEED_SET_VP);
-            #if ENABLED(TJC_AVAILABLE) 
+            #if ENABLED(TJC_AVAILABLE)
               memset(temp,0,sizeof(temp));
               sprintf(temp, "adjustspeed.targetspeed.val=%d", (int)(thermalManager.fan_speed[0]));
               LCD_SERIAL_2.printf(temp);
-              LCD_SERIAL_2.printf("\xff\xff\xff");           
+              LCD_SERIAL_2.printf("\xff\xff\xff");
             #endif
           }
         }
@@ -3663,7 +3663,7 @@
         else if(recdat.data[0] == 0x10) //最大速度
         {
           advaned_set = 2;
-          unit = 10;    
+          unit = 10;
         }
         else if(recdat.data[0] == 0x11)
         {
@@ -3683,7 +3683,7 @@
             {
               planner.settings.max_acceleration_mm_per_s2[X_AXIS] = 100;
             }
-            planner.set_max_acceleration(X_AXIS, planner.settings.max_acceleration_mm_per_s2[X_AXIS]);            
+            planner.set_max_acceleration(X_AXIS, planner.settings.max_acceleration_mm_per_s2[X_AXIS]);
           }
         }
         else if(recdat.data[0] == 0x12)
@@ -3703,7 +3703,7 @@
             if(planner.settings.max_acceleration_mm_per_s2[Y_AXIS]<100)
             {
               planner.settings.max_acceleration_mm_per_s2[Y_AXIS] = 100;
-            }             
+            }
           }
           planner.set_max_acceleration(Y_AXIS, planner.settings.max_acceleration_mm_per_s2[Y_AXIS]);
         }
@@ -3732,7 +3732,7 @@
                 planner.settings.max_acceleration_mm_per_s2[Z_AXIS] = 50;
               }
             }
-            planner.set_max_acceleration(Z_AXIS, planner.settings.max_acceleration_mm_per_s2[Z_AXIS]);            
+            planner.set_max_acceleration(Z_AXIS, planner.settings.max_acceleration_mm_per_s2[Z_AXIS]);
           }
         }
         else if(recdat.data[0] == 0x14)
@@ -3753,7 +3753,7 @@
             {
               planner.settings.max_acceleration_mm_per_s2[E_AXIS_N(0)] = 100;
             }
-            planner.set_max_acceleration(E_AXIS_N(0), planner.settings.max_acceleration_mm_per_s2[E_AXIS_N(0)]);              
+            planner.set_max_acceleration(E_AXIS_N(0), planner.settings.max_acceleration_mm_per_s2[E_AXIS_N(0)]);
           }
         }
         else if(recdat.data[0] == 0x15) //X轴
@@ -3774,7 +3774,7 @@
             {
               planner.settings.max_acceleration_mm_per_s2[X_AXIS] = 3000;
             }
-            planner.set_max_acceleration(X_AXIS, planner.settings.max_acceleration_mm_per_s2[X_AXIS]);         
+            planner.set_max_acceleration(X_AXIS, planner.settings.max_acceleration_mm_per_s2[X_AXIS]);
           }
         }
         else if(recdat.data[0] == 0x16) //Y轴
@@ -3795,7 +3795,7 @@
             {
               planner.settings.max_acceleration_mm_per_s2[Y_AXIS] = 3000;
             }
-            planner.set_max_acceleration(Y_AXIS, planner.settings.max_acceleration_mm_per_s2[Y_AXIS]);            
+            planner.set_max_acceleration(Y_AXIS, planner.settings.max_acceleration_mm_per_s2[Y_AXIS]);
           }
         }
         else if(recdat.data[0] == 0x17) //Z轴
@@ -3816,7 +3816,7 @@
             {
               planner.settings.max_acceleration_mm_per_s2[Z_AXIS] = 150;
             }
-            planner.set_max_acceleration(Z_AXIS, planner.settings.max_acceleration_mm_per_s2[Z_AXIS]);             
+            planner.set_max_acceleration(Z_AXIS, planner.settings.max_acceleration_mm_per_s2[Z_AXIS]);
           }
         }
         else if(recdat.data[0] == 0x18) //E轴
@@ -3837,9 +3837,9 @@
             {
               planner.settings.max_acceleration_mm_per_s2[E_AXIS_N(0)] = 2000;
             }
-            planner.set_max_acceleration(E_AXIS_N(0), planner.settings.max_acceleration_mm_per_s2[E_AXIS_N(0)]);              
+            planner.set_max_acceleration(E_AXIS_N(0), planner.settings.max_acceleration_mm_per_s2[E_AXIS_N(0)]);
           }
-        }                        
+        }
         else if (recdat.data[0] == 0xF1)
         {
           #if FAN_COUNT > 0
@@ -3866,7 +3866,7 @@
           RTS_SndData(ExchangePageBase + 15, ExchangepageAddr);
         }
 
-        #if ENABLED(TJC_AVAILABLE) 
+        #if ENABLED(TJC_AVAILABLE)
           if(advaned_set==1)
           {
             memset(temp,0,sizeof(temp));
@@ -3909,16 +3909,16 @@
             memset(temp,0,sizeof(temp));
             sprintf(temp, "speedsetvalue.eaxis.val=%d", (int)(planner.settings.max_acceleration_mm_per_s2[E_AXIS_N(0)]));
             LCD_SERIAL_2.printf(temp);
-            LCD_SERIAL_2.printf("\xff\xff\xff");    
-          }                                    
-        #endif 
+            LCD_SERIAL_2.printf("\xff\xff\xff");
+          }
+        #endif
       }
       break;
 
       case CoolScreenKey:
       {
         uint8_t e_temp = 0,bed_temp = 0;
-        
+
         if (recdat.data[0] == 1)
         {
           thermalManager.setTargetHotend(0, 0);
@@ -3926,7 +3926,7 @@
           RTS_SndData(0, HEAD0_SET_TEMP_VP);
           RTS_SndData(0, HEAD0_FAN_ICON_VP);
 
-          #if ENABLED(TJC_AVAILABLE) 
+          #if ENABLED(TJC_AVAILABLE)
             //pretemp
             memset(temp,0,sizeof(temp));
             sprintf(temp, "pretemp.nozzletemp.txt=\"%d / %d\"", thermalManager.wholeDegHotend(0) , thermalManager.degTargetHotend(0));
@@ -3944,7 +3944,7 @@
           thermalManager.setTargetBed(0);
           RTS_SndData(0, BED_SET_TEMP_VP);
 
-          #if ENABLED(TJC_AVAILABLE) 
+          #if ENABLED(TJC_AVAILABLE)
             //pretemp
             memset(temp,0,sizeof(temp));
             sprintf(temp, "pretemp.nozzletemp.txt=\"%d / %d\"", thermalManager.wholeDegHotend(0) , thermalManager.degTargetHotend(0));
@@ -4023,7 +4023,7 @@
           thermalManager.setTargetHotend(e_temp, ExtUI::extruder_t::E0);
           thermalManager.setTargetBed(bed_temp);
 
-          #if ENABLED(TJC_AVAILABLE) 
+          #if ENABLED(TJC_AVAILABLE)
             //pretemp
             memset(temp,0,sizeof(temp));
             sprintf(temp, "pretemp.nozzletemp.txt=\"%d / %d\"", thermalManager.wholeDegHotend(0) , thermalManager.degTargetHotend(0));
@@ -4056,7 +4056,7 @@
           thermalManager.setTargetHotend(e_temp, ExtUI::extruder_t::E0);
           thermalManager.setTargetBed(bed_temp);
 
-          #if ENABLED(TJC_AVAILABLE) 
+          #if ENABLED(TJC_AVAILABLE)
             //pretemp
             memset(temp,0,sizeof(temp));
             sprintf(temp, "pretemp.nozzletemp.txt=\"%d / %d\"", thermalManager.wholeDegHotend(0) , thermalManager.degTargetHotend(0));
@@ -4088,7 +4088,7 @@
           thermalManager.setTargetHotend(e_temp, ExtUI::extruder_t::E0);
           thermalManager.setTargetBed(bed_temp);
 
-          #if ENABLED(TJC_AVAILABLE) 
+          #if ENABLED(TJC_AVAILABLE)
             //pretemp
             memset(temp,0,sizeof(temp));
             sprintf(temp, "pretemp.nozzletemp.txt=\"%d / %d\"", thermalManager.wholeDegHotend(0) , thermalManager.degTargetHotend(0));
@@ -4120,7 +4120,7 @@
           thermalManager.setTargetHotend(e_temp, ExtUI::extruder_t::E0);
           thermalManager.setTargetBed(bed_temp);
 
-          #if ENABLED(TJC_AVAILABLE) 
+          #if ENABLED(TJC_AVAILABLE)
             //pretemp
             memset(temp,0,sizeof(temp));
             sprintf(temp, "pretemp.nozzletemp.txt=\"%d / %d\"", thermalManager.wholeDegHotend(0) , thermalManager.degTargetHotend(0));
@@ -4161,11 +4161,11 @@
             memset(temp,0,sizeof(temp));
             sprintf(temp, "tempsetvalue.bedtemp.val=%d", pla_bed_temp);
             LCD_SERIAL_2.printf(temp);
-            LCD_SERIAL_2.printf("\xff\xff\xff"); 
+            LCD_SERIAL_2.printf("\xff\xff\xff");
 
             LCD_SERIAL_2.printf("page tempsetvalue");
-            LCD_SERIAL_2.printf("\xff\xff\xff");                                     
-          #endif 
+            LCD_SERIAL_2.printf("\xff\xff\xff");
+          #endif
         }
         else if(recdat.data[0] == 14) //显示默认PETG温度
         {
@@ -4185,11 +4185,11 @@
             memset(temp,0,sizeof(temp));
             sprintf(temp, "tempsetvalue.bedtemp.val=%d", petg_bed_temp);
             LCD_SERIAL_2.printf(temp);
-            LCD_SERIAL_2.printf("\xff\xff\xff"); 
+            LCD_SERIAL_2.printf("\xff\xff\xff");
 
             LCD_SERIAL_2.printf("page tempsetvalue");
-            LCD_SERIAL_2.printf("\xff\xff\xff");                                     
-          #endif 
+            LCD_SERIAL_2.printf("\xff\xff\xff");
+          #endif
         }
         else if(recdat.data[0] == 15) //显示默认ABS温度
         {
@@ -4209,11 +4209,11 @@
             memset(temp,0,sizeof(temp));
             sprintf(temp, "tempsetvalue.bedtemp.val=%d", abs_bed_temp);
             LCD_SERIAL_2.printf(temp);
-            LCD_SERIAL_2.printf("\xff\xff\xff"); 
+            LCD_SERIAL_2.printf("\xff\xff\xff");
 
             LCD_SERIAL_2.printf("page tempsetvalue");
-            LCD_SERIAL_2.printf("\xff\xff\xff");                                     
-          #endif 
+            LCD_SERIAL_2.printf("\xff\xff\xff");
+          #endif
         }
         else if(recdat.data[0] == 16) //显示默认TPU温度
         {
@@ -4233,17 +4233,17 @@
             memset(temp,0,sizeof(temp));
             sprintf(temp, "tempsetvalue.bedtemp.val=%d", tpu_bed_temp);
             LCD_SERIAL_2.printf(temp);
-            LCD_SERIAL_2.printf("\xff\xff\xff"); 
+            LCD_SERIAL_2.printf("\xff\xff\xff");
 
             LCD_SERIAL_2.printf("page tempsetvalue");
-            LCD_SERIAL_2.printf("\xff\xff\xff");                                     
-          #endif 
+            LCD_SERIAL_2.printf("\xff\xff\xff");
+          #endif
         }
         else if(recdat.data[0] == 17) //默认调平温度
         {
           temp_set_flag = 0x05;
           RTS_SndData(probe_extrusion_temp, PRHEAT_NOZZLE_TEMP_VP);
-          RTS_SndData(probe_bed_temp, PRHEAT_BED_TEMP_VP);          
+          RTS_SndData(probe_bed_temp, PRHEAT_BED_TEMP_VP);
           RTS_SndData(ExchangePageBase + 35, ExchangepageAddr);
 
           #if ENABLED(TJC_AVAILABLE)
@@ -4257,14 +4257,14 @@
             memset(temp,0,sizeof(temp));
             sprintf(temp, "tempsetvalue.bedtemp.val=%d", probe_bed_temp);
             LCD_SERIAL_2.printf(temp);
-            LCD_SERIAL_2.printf("\xff\xff\xff"); 
+            LCD_SERIAL_2.printf("\xff\xff\xff");
 
             LCD_SERIAL_2.printf("page tempsetvalue");
-            LCD_SERIAL_2.printf("\xff\xff\xff");                                     
+            LCD_SERIAL_2.printf("\xff\xff\xff");
           #endif
         }
 
-      }              
+      }
       break;
 
       case Heater0TempEnterKey:
@@ -4333,7 +4333,7 @@
               if(pla_extrusion_temp<160)
               {
                 pla_extrusion_temp = 160;
-              }        
+              }
             }
             memset(temp,0,sizeof(temp));
             sprintf(temp, "tempsetvalue.nozzletemp.val=%d", (int)pla_extrusion_temp);
@@ -4361,7 +4361,7 @@
               if(pla_extrusion_temp<160)
               {
                 petg_extrusion_temp = 160;
-              }        
+              }
             }
             memset(temp,0,sizeof(temp));
             sprintf(temp, "tempsetvalue.nozzletemp.val=%d", (int)petg_extrusion_temp);
@@ -4370,7 +4370,7 @@
           #else
             petg_extrusion_temp = recdat.data[0];
             RTS_SndData(petg_extrusion_temp, PRHEAT_NOZZLE_TEMP_VP);
-          #endif        
+          #endif
         }
         else if(temp_set_flag == 0x03)
         {
@@ -4389,7 +4389,7 @@
               if(abs_extrusion_temp<160)
               {
                 abs_extrusion_temp = 160;
-              }        
+              }
             }
             memset(temp,0,sizeof(temp));
             sprintf(temp, "tempsetvalue.nozzletemp.val=%d", (int)abs_extrusion_temp);
@@ -4398,7 +4398,7 @@
           #else
             abs_extrusion_temp = recdat.data[0];
             RTS_SndData(abs_extrusion_temp, PRHEAT_NOZZLE_TEMP_VP);
-          #endif      
+          #endif
         }
         else if(temp_set_flag == 0x04)
         {
@@ -4417,7 +4417,7 @@
               if(tpu_extrusion_temp<160)
               {
                 tpu_extrusion_temp = 160;
-              }        
+              }
             }
             memset(temp,0,sizeof(temp));
             sprintf(temp, "tempsetvalue.nozzletemp.val=%d", (int)tpu_extrusion_temp);
@@ -4425,8 +4425,8 @@
             LCD_SERIAL_2.printf("\xff\xff\xff");
           #else
             tpu_extrusion_temp = recdat.data[0];
-            RTS_SndData(tpu_extrusion_temp, PRHEAT_NOZZLE_TEMP_VP); 
-          #endif    
+            RTS_SndData(tpu_extrusion_temp, PRHEAT_NOZZLE_TEMP_VP);
+          #endif
         }
         else if(temp_set_flag == 0x05)
         {
@@ -4445,7 +4445,7 @@
               if(probe_extrusion_temp<140)
               {
                 probe_extrusion_temp = 140;
-              }        
+              }
             }
             memset(temp,0,sizeof(temp));
             sprintf(temp, "tempsetvalue.nozzletemp.val=%d", (int)probe_extrusion_temp);
@@ -4453,9 +4453,9 @@
             LCD_SERIAL_2.printf("\xff\xff\xff");
           #else
             probe_extrusion_temp = recdat.data[0];
-            RTS_SndData(probe_extrusion_temp, PRHEAT_NOZZLE_TEMP_VP); 
-          #endif    
-        }    
+            RTS_SndData(probe_extrusion_temp, PRHEAT_NOZZLE_TEMP_VP);
+          #endif
+        }
       }
       break;
 
@@ -4478,7 +4478,7 @@
               if(pla_bed_temp<50)
               {
                 pla_bed_temp = 50;
-              }        
+              }
             }
             memset(temp,0,sizeof(temp));
             sprintf(temp, "tempsetvalue.bedtemp.val=%d", (int)pla_bed_temp);
@@ -4487,7 +4487,7 @@
           #else
             pla_bed_temp = recdat.data[0];
             RTS_SndData(pla_bed_temp, PRHEAT_BED_TEMP_VP);
-          #endif  
+          #endif
         }
         else if(temp_set_flag == 0x02)
         {
@@ -4506,7 +4506,7 @@
               if(petg_bed_temp<50)
               {
                 petg_bed_temp = 50;
-              }        
+              }
             }
             memset(temp,0,sizeof(temp));
             sprintf(temp, "tempsetvalue.bedtemp.val=%d", (int)petg_bed_temp);
@@ -4515,7 +4515,7 @@
           #else
             petg_bed_temp = recdat.data[0];
             RTS_SndData(petg_bed_temp, PRHEAT_BED_TEMP_VP);
-          #endif           
+          #endif
         }
         else if(temp_set_flag == 0x03)
         {
@@ -4534,7 +4534,7 @@
               if(abs_bed_temp<50)
               {
                 abs_bed_temp = 50;
-              }        
+              }
             }
             memset(temp,0,sizeof(temp));
             sprintf(temp, "tempsetvalue.bedtemp.val=%d", (int)abs_bed_temp);
@@ -4543,7 +4543,7 @@
           #else
             abs_bed_temp = recdat.data[0];
             RTS_SndData(abs_bed_temp, PRHEAT_BED_TEMP_VP);
-          #endif       
+          #endif
         }
         else if(temp_set_flag == 0x04)
         {
@@ -4562,16 +4562,16 @@
               if(tpu_bed_temp<50)
               {
                 tpu_bed_temp = 50;
-              }        
+              }
             }
             memset(temp,0,sizeof(temp));
             sprintf(temp, "tempsetvalue.bedtemp.val=%d", (int)tpu_bed_temp);
             LCD_SERIAL_2.printf(temp);
-            LCD_SERIAL_2.printf("\xff\xff\xff"); 
+            LCD_SERIAL_2.printf("\xff\xff\xff");
           #else
             tpu_bed_temp = recdat.data[0];
-            RTS_SndData(tpu_bed_temp, PRHEAT_BED_TEMP_VP); 
-          #endif     
+            RTS_SndData(tpu_bed_temp, PRHEAT_BED_TEMP_VP);
+          #endif
         }
         else if(temp_set_flag == 0x05)
         {
@@ -4590,7 +4590,7 @@
               if(probe_bed_temp<50)
               {
                 probe_bed_temp = 50;
-              }        
+              }
             }
             memset(temp,0,sizeof(temp));
             sprintf(temp, "tempsetvalue.bedtemp.val=%d", (int)probe_bed_temp);
@@ -4598,9 +4598,9 @@
             LCD_SERIAL_2.printf("\xff\xff\xff");
           #else
             probe_bed_temp = recdat.data[0];
-            RTS_SndData(probe_bed_temp, PRHEAT_BED_TEMP_VP); 
-          #endif   
-        }   
+            RTS_SndData(probe_bed_temp, PRHEAT_BED_TEMP_VP);
+          #endif
+        }
       }
       break;
       //999------
@@ -4629,7 +4629,7 @@
           memset(temp,0,sizeof(temp));
           sprintf(temp, "prefilament.filamentspeed.txt=\"%d\"", (int)manual_feedrate_mm_m[E_AXIS]);
           LCD_SERIAL_2.printf(temp);
-          LCD_SERIAL_2.printf("\xff\xff\xff");         
+          LCD_SERIAL_2.printf("\xff\xff\xff");
         #else
           manual_feedrate_mm_m[E_AXIS] = ((float)recdat.data[0] / 10);
         #endif
@@ -4755,9 +4755,9 @@
           RTS_SndData(ExchangePageBase + 32, ExchangepageAddr);
           RTS_SndData(0, MOTOR_FREE_ICON_VP);
 
-          #if ENABLED(TJC_AVAILABLE) 
+          #if ENABLED(TJC_AVAILABLE)
             LCD_SERIAL_2.printf("page autohome");
-            LCD_SERIAL_2.printf("\xff\xff\xff");               
+            LCD_SERIAL_2.printf("\xff\xff\xff");
           #endif
         }
         else if(recdat.data[0] == 5)
@@ -4772,7 +4772,7 @@
         {
           queue.enqueue_now_P(PSTR("G28 Z"));
         }
-      }           
+      }
       break;
 
       case SettingScreenKey:
@@ -4792,20 +4792,20 @@
           queue.enqueue_now_P(PSTR("G1 F200 Z0.0"));
           RTS_SndData(ExchangePageBase + 32, ExchangepageAddr);
 
-          #if ENABLED(TJC_AVAILABLE) 
-          
+          #if ENABLED(TJC_AVAILABLE)
+
             LCD_SERIAL_2.printf("page autohome");
             LCD_SERIAL_2.printf("\xff\xff\xff");
 
             #if ENABLED(NEPTUNE_3_PLUS)
               LCD_SERIAL_2.printf("leveling.va1.val=2");
-              LCD_SERIAL_2.printf("\xff\xff\xff");  
+              LCD_SERIAL_2.printf("\xff\xff\xff");
             #elif ENABLED(NEPTUNE_3_PRO)
               LCD_SERIAL_2.printf("leveling.va1.val=1");
-              LCD_SERIAL_2.printf("\xff\xff\xff");  
+              LCD_SERIAL_2.printf("\xff\xff\xff");
             #elif ENABLED(NEPTUNE_3_MAX)
               LCD_SERIAL_2.printf("leveling.va1.val=3");
-              LCD_SERIAL_2.printf("\xff\xff\xff");  
+              LCD_SERIAL_2.printf("\xff\xff\xff");
             #endif
 
           #endif
@@ -4842,21 +4842,21 @@
           //RTS_SndData(ExchangePageBase + 23, ExchangepageAddr);
           RTS_SndData(ExchangePageBase + 32, ExchangepageAddr);
 
-          #if ENABLED(TJC_AVAILABLE) 
+          #if ENABLED(TJC_AVAILABLE)
             LCD_SERIAL_2.printf("page autohome");
-            LCD_SERIAL_2.printf("\xff\xff\xff");               
+            LCD_SERIAL_2.printf("\xff\xff\xff");
           #endif
         }
         else if (recdat.data[0] == 3)
         {
-          // #if ENABLED(TJC_AVAILABLE) 
+          // #if ENABLED(TJC_AVAILABLE)
           //   LCD_SERIAL_2.printf("page premove");
-          //   LCD_SERIAL_2.printf("\xff\xff\xff"); 
+          //   LCD_SERIAL_2.printf("\xff\xff\xff");
 
           //   LCD_SERIAL_2.printf("premove.unit_move.val=2"); //默认移动单位1mm
-          //   LCD_SERIAL_2.printf("\xff\xff\xff"); 
+          //   LCD_SERIAL_2.printf("\xff\xff\xff");
           // #endif
-        
+
           // if(active_extruder == 0)
           // {
           //   RTS_SndData(0, EXCHANGE_NOZZLE_ICON_VP);
@@ -4922,44 +4922,44 @@
           RTS_SndData(1, MOTOR_FREE_ICON_VP);
         }
         else if (recdat.data[0] == 7)
-        { 
+        {
           if (thermalManager.fan_speed[0])
           {
             RTS_SndData(1, HEAD0_FAN_ICON_VP);
             thermalManager.set_fan_speed(0, 0);
 
-            #if ENABLED(TJC_AVAILABLE) 
+            #if ENABLED(TJC_AVAILABLE)
               LCD_SERIAL_2.printf("set.va0.val=0");
-              LCD_SERIAL_2.printf("\xff\xff\xff");               
-            #endif    
+              LCD_SERIAL_2.printf("\xff\xff\xff");
+            #endif
           }
           else
           {
             RTS_SndData(0, HEAD0_FAN_ICON_VP);
             thermalManager.set_fan_speed(0, 255);
-            #if ENABLED(TJC_AVAILABLE) 
+            #if ENABLED(TJC_AVAILABLE)
               LCD_SERIAL_2.printf("set.va0.val=1");
-              LCD_SERIAL_2.printf("\xff\xff\xff");               
-            #endif   
-          }  
+              LCD_SERIAL_2.printf("\xff\xff\xff");
+            #endif
+          }
         }
         else if(recdat.data[0] == 8)
         {
           if(enable_filment_check)
           {
             enable_filment_check = false;
-            #if ENABLED(TJC_AVAILABLE) 
+            #if ENABLED(TJC_AVAILABLE)
               LCD_SERIAL_2.printf("set.va1.val=0");
-              LCD_SERIAL_2.printf("\xff\xff\xff");               
-            #endif            
+              LCD_SERIAL_2.printf("\xff\xff\xff");
+            #endif
           }
           else
           {
             enable_filment_check = true;
-            #if ENABLED(TJC_AVAILABLE) 
+            #if ENABLED(TJC_AVAILABLE)
               LCD_SERIAL_2.printf("set.va1.val=1");
-              LCD_SERIAL_2.printf("\xff\xff\xff");               
-            #endif               
+              LCD_SERIAL_2.printf("\xff\xff\xff");
+            #endif
           }
         }
         else if(recdat.data[0] == 9)
@@ -4986,7 +4986,7 @@
               LCD_SERIAL_2.printf("\xff\xff\xff");
             #endif
             break;
-          }          
+          }
 
         }
         else if(recdat.data[0] == 0x0A)
@@ -5005,39 +5005,39 @@
             memset(temp,0,sizeof(temp));
             sprintf(temp, "prefilament.filamentspeed.txt=\"%d\"", (int)manual_feedrate_mm_m[E_AXIS]);
             LCD_SERIAL_2.printf(temp);
-            LCD_SERIAL_2.printf("\xff\xff\xff");    
+            LCD_SERIAL_2.printf("\xff\xff\xff");
           #endif
         }
         else if(recdat.data[0] == 0x0B)
         {
           // LCD_SERIAL_2.printf("page set");
-          // LCD_SERIAL_2.printf("\xff\xff\xff");    
+          // LCD_SERIAL_2.printf("\xff\xff\xff");
         }
         else if(recdat.data[0] == 0x0C)
         {
           // LCD_SERIAL_2.printf("page warn_rdlevel");
-          // LCD_SERIAL_2.printf("\xff\xff\xff");    
+          // LCD_SERIAL_2.printf("\xff\xff\xff");
         }
         else if(recdat.data[0] == 0x0D)
         {
           #if ENABLED(TJC_AVAILABLE)
             #if ENABLED(POWER_LOSS_RECOVERY)
               if(recovery.enabled==0)
-              { 
+              {
                 LCD_SERIAL_2.printf("multiset.plrbutton.val=0");
-                LCD_SERIAL_2.printf("\xff\xff\xff"); 
+                LCD_SERIAL_2.printf("\xff\xff\xff");
               }
               else if(recovery.enabled==1)
               {
                 LCD_SERIAL_2.printf("multiset.plrbutton.val=1");
-                LCD_SERIAL_2.printf("\xff\xff\xff"); 
-              }              
+                LCD_SERIAL_2.printf("\xff\xff\xff");
+              }
               LCD_SERIAL_2.printf("page multiset");
               LCD_SERIAL_2.printf("\xff\xff\xff");
-            #endif 
-          #endif            
+            #endif
+          #endif
         }
-        
+
       }
       break;
 
@@ -5101,14 +5101,14 @@
         {
           #if ENABLED(EEPROM_SETTINGS)
             settings.save();
-          #endif          
+          #endif
         }
         else if(recdat.data[0] == 6)
         {
           temp_set_flag = 0x00;
           #if ENABLED(EEPROM_SETTINGS)
             settings.save();
-          #endif          
+          #endif
         }
       }
       break;
@@ -5129,9 +5129,9 @@
             queue.enqueue_now_P(PSTR("G28"));
             RTS_SndData(ExchangePageBase + 32, ExchangepageAddr);
 
-          #if ENABLED(TJC_AVAILABLE) 
+          #if ENABLED(TJC_AVAILABLE)
             LCD_SERIAL_2.printf("page autohome");
-            LCD_SERIAL_2.printf("\xff\xff\xff");               
+            LCD_SERIAL_2.printf("\xff\xff\xff");
           #endif
           }
           else
@@ -5146,7 +5146,7 @@
           #if ENABLED(BABYSTEPPING)
             last_zoffset = probe.offset.z;
             //if (WITHIN((zprobe_zoffset + 0.1), Z_PROBE_OFFSET_RANGE_MIN, Z_PROBE_OFFSET_RANGE_MAX))
-            
+
             if (WITHIN((probe.offset.z + zoffset_unit), Z_PROBE_OFFSET_RANGE_MIN, Z_PROBE_OFFSET_RANGE_MAX))
             {
               #if ENABLED(HAS_LEVELING)
@@ -5160,16 +5160,16 @@
 
             RTS_SndData(zprobe_zoffset * 100, AUTO_BED_LEVEL_ZOFFSET_VP);
 
-            #if ENABLED(TJC_AVAILABLE) 
+            #if ENABLED(TJC_AVAILABLE)
               memset(temp,0,sizeof(temp));
               sprintf(temp, "leveldata.z_offset.val=%d", (int)(probe.offset.z * 100));
               LCD_SERIAL_2.printf(temp);
               LCD_SERIAL_2.printf("\xff\xff\xff");
-              
+
               memset(temp,0,sizeof(temp));
               sprintf(temp, "adjustzoffset.z_offset.val=%d", (int)(probe.offset.z * 100));
               LCD_SERIAL_2.printf(temp);
-              LCD_SERIAL_2.printf("\xff\xff\xff");              
+              LCD_SERIAL_2.printf("\xff\xff\xff");
             #endif
           #endif
         }
@@ -5186,16 +5186,16 @@
               #endif
             }
             RTS_SndData(zprobe_zoffset * 100, AUTO_BED_LEVEL_ZOFFSET_VP);
-            #if ENABLED(TJC_AVAILABLE) 
+            #if ENABLED(TJC_AVAILABLE)
               memset(temp,0,sizeof(temp));
               sprintf(temp, "leveldata.z_offset.val=%d", (int)(probe.offset.z * 100));
               LCD_SERIAL_2.printf(temp);
-              LCD_SERIAL_2.printf("\xff\xff\xff");   
+              LCD_SERIAL_2.printf("\xff\xff\xff");
 
               memset(temp,0,sizeof(temp));
               sprintf(temp, "adjustzoffset.z_offset.val=%d", (int)(probe.offset.z * 100));
               LCD_SERIAL_2.printf(temp);
-              LCD_SERIAL_2.printf("\xff\xff\xff");           
+              LCD_SERIAL_2.printf("\xff\xff\xff");
             #endif
           #endif
         }
@@ -5204,9 +5204,9 @@
           RTS_SndData(0, ICON_ADJUST_Z_OFFSET_UNIT);
           RTS_SndData(0, ICON_LEVEL_SELECT);
           zoffset_unit = 0.01;
-          #if ENABLED(TJC_AVAILABLE) 
+          #if ENABLED(TJC_AVAILABLE)
             LCD_SERIAL_2.printf("adjustzoffset.zoffset_value.val=1");
-            LCD_SERIAL_2.printf("\xff\xff\xff");          
+            LCD_SERIAL_2.printf("\xff\xff\xff");
           #endif
         }
         else if (recdat.data[0] == 5)
@@ -5214,30 +5214,30 @@
           RTS_SndData(1, ICON_ADJUST_Z_OFFSET_UNIT);
           RTS_SndData(1, ICON_LEVEL_SELECT);
           zoffset_unit = 0.1;
-          #if ENABLED(TJC_AVAILABLE) 
+          #if ENABLED(TJC_AVAILABLE)
             LCD_SERIAL_2.printf("adjustzoffset.zoffset_value.val=2");
-            LCD_SERIAL_2.printf("\xff\xff\xff");          
+            LCD_SERIAL_2.printf("\xff\xff\xff");
           #endif
-          
+
         }
         else if (recdat.data[0] == 6)
         {
           RTS_SndData(2, ICON_ADJUST_Z_OFFSET_UNIT);
           RTS_SndData(2, ICON_LEVEL_SELECT);
           zoffset_unit = 1;
-          #if ENABLED(TJC_AVAILABLE) 
+          #if ENABLED(TJC_AVAILABLE)
             LCD_SERIAL_2.printf("adjustzoffset.zoffset_value.val=3");
-            LCD_SERIAL_2.printf("\xff\xff\xff");          
+            LCD_SERIAL_2.printf("\xff\xff\xff");
           #endif
         }
         else if (recdat.data[0] == 7) //LED2
         {
-          if(status_led1)  
+          if(status_led1)
           {
             //关LED
             status_led1 = false;
             RTS_SndData(1, ICON_ADJUST_LED2);
-            #if ENABLED(TJC_AVAILABLE) 
+            #if ENABLED(TJC_AVAILABLE)
               LCD_SERIAL_2.printf("status_led1=0");
               LCD_SERIAL_2.printf("\xff\xff\xff");
             #endif
@@ -5245,12 +5245,12 @@
               OUT_WRITE(LED2_PIN, LOW);
             #endif
           }
-          else 
+          else
           {
             //开LED
             status_led1 = true;
             RTS_SndData(0, ICON_ADJUST_LED2);
-            #if ENABLED(TJC_AVAILABLE) 
+            #if ENABLED(TJC_AVAILABLE)
               LCD_SERIAL_2.printf("status_led1=1");
               LCD_SERIAL_2.printf("\xff\xff\xff");
             #endif
@@ -5258,15 +5258,15 @@
               OUT_WRITE(LED2_PIN, HIGH);
             #endif
           }
-          flag_led1_run_ctrl = 0;         
+          flag_led1_run_ctrl = 0;
         }
         else if (recdat.data[0] == 8) //LED3
         {
-          if(status_led2) 
+          if(status_led2)
           {
             status_led2 = false;
             RTS_SndData(1, ICON_ADJUST_LED3);
-            #if ENABLED(TJC_AVAILABLE) 
+            #if ENABLED(TJC_AVAILABLE)
               LCD_SERIAL_2.printf("status_led2=0");
               LCD_SERIAL_2.printf("\xff\xff\xff");
             #endif
@@ -5274,11 +5274,11 @@
               OUT_WRITE(LED3_PIN, LOW);
             #endif
           }
-          else 
+          else
           {
             status_led2 = true;
             RTS_SndData(0, ICON_ADJUST_LED3);
-            #if ENABLED(TJC_AVAILABLE) 
+            #if ENABLED(TJC_AVAILABLE)
               LCD_SERIAL_2.printf("status_led2=1");
               LCD_SERIAL_2.printf("\xff\xff\xff");
             #endif
@@ -5303,19 +5303,19 @@
           memset(temp,0,sizeof(temp));
           sprintf(temp, "printpause.printspeed.txt=\"%d\"", feedrate_percentage );
           LCD_SERIAL_2.printf(temp);
-          LCD_SERIAL_2.printf("\xff\xff\xff"); 
+          LCD_SERIAL_2.printf("\xff\xff\xff");
 
           //printtime
-          #if ENABLED(RTS_AVAILABLE) 
+          #if ENABLED(RTS_AVAILABLE)
             duration_t elapsed = print_job_timer.duration();
             rtscheck.RTS_SndData(elapsed.value / 3600, PRINT_TIME_HOUR_VP);
             rtscheck.RTS_SndData((elapsed.value % 3600) / 60, PRINT_TIME_MIN_VP);
             #if ENABLED(TJC_AVAILABLE)
-              memset(temp,0,sizeof(temp));   
+              memset(temp,0,sizeof(temp));
               sprintf(temp, "printpause.printtime.txt=\"%d h %d min\"", (int)elapsed.value/3600,(int)(elapsed.value % 3600)/60);
-              LCD_SERIAL_2.printf(temp); 
-              LCD_SERIAL_2.printf("\xff\xff\xff");            
-            #endif  
+              LCD_SERIAL_2.printf(temp);
+              LCD_SERIAL_2.printf("\xff\xff\xff");
+            #endif
           #endif
 
           //printpercent
@@ -5326,44 +5326,44 @@
               Percentrecord = card.percentDone();
               if(Percentrecord <= 100)
               {
-                #if ENABLED(RTS_AVAILABLE) 
+                #if ENABLED(RTS_AVAILABLE)
                   rtscheck.RTS_SndData((unsigned char)Percentrecord, PRINT_PROCESS_ICON_VP);
-                  #if ENABLED(TJC_AVAILABLE)   
+                  #if ENABLED(TJC_AVAILABLE)
                     memset(temp,0,sizeof(temp));
                     sprintf(temp, "printpause.printprocess.val=%d", Percentrecord);
-                    LCD_SERIAL_2.printf(temp); 
+                    LCD_SERIAL_2.printf(temp);
                     LCD_SERIAL_2.printf("\xff\xff\xff");
 
                     memset(temp,0,sizeof(temp));
                     sprintf(temp, "printpause.printvalue.txt=\"%d\"", Percentrecord);
-                    LCD_SERIAL_2.printf(temp); 
-                    LCD_SERIAL_2.printf("\xff\xff\xff");                
-                  #endif  
+                    LCD_SERIAL_2.printf(temp);
+                    LCD_SERIAL_2.printf("\xff\xff\xff");
+                  #endif
                 #endif
               }
             }
             else
             {
-              #if ENABLED(RTS_AVAILABLE) 
+              #if ENABLED(RTS_AVAILABLE)
                 rtscheck.RTS_SndData(0, PRINT_PROCESS_ICON_VP);
                 rtscheck.RTS_SndData(0, PRINT_SURPLUS_TIME_HOUR_VP);
                 rtscheck.RTS_SndData(0, PRINT_SURPLUS_TIME_MIN_VP);
 
                 #if ENABLED(TJC_AVAILABLE)
-                  LCD_SERIAL_2.printf("printpause.printvalue.txt=\"0\""); 
+                  LCD_SERIAL_2.printf("printpause.printvalue.txt=\"0\"");
                   LCD_SERIAL_2.printf("\xff\xff\xff");
-                  LCD_SERIAL_2.printf("printpause.printprocess.val=0"); 
-                  LCD_SERIAL_2.printf("\xff\xff\xff");    
-                #endif  
+                  LCD_SERIAL_2.printf("printpause.printprocess.val=0");
+                  LCD_SERIAL_2.printf("\xff\xff\xff");
+                #endif
               #endif
             }
 
             last_cardpercentValue = card.percentDone();
-          }          
+          }
         }
         else if(recdat.data[0] == 11)  //0x0B
         {
-          #if ENABLED(TJC_AVAILABLE) 
+          #if ENABLED(TJC_AVAILABLE)
             //挤出头温度信息
             memset(temp,0,sizeof(temp));
             sprintf(temp, "main.nozzletemp.txt=\"%d / %d\"", thermalManager.wholeDegHotend(0) , thermalManager.degTargetHotend(0));
@@ -5382,8 +5382,8 @@
           if(!flag_power_on) //已开机
           {
             #if ENABLED(TJC_AVAILABLE)
-            
-              //boot提示信息 
+
+              //boot提示信息
               LCD_SERIAL_2.printf("tm0.en=0");
               LCD_SERIAL_2.printf("\xff\xff\xff");
               LCD_SERIAL_2.printf("va0.val=0");
@@ -5393,15 +5393,15 @@
 
               //机型信息
               #if ENABLED(NEPTUNE_3_PLUS)
-                LCD_SERIAL_2.printf("main.va0.val=2");  
+                LCD_SERIAL_2.printf("main.va0.val=2");
                 LCD_SERIAL_2.printf("\xff\xff\xff");
               #elif ENABLED(NEPTUNE_3_PRO)
-                LCD_SERIAL_2.printf("main.va0.val=1");  
-                LCD_SERIAL_2.printf("\xff\xff\xff");                  
-              #elif ENABLED(NEPTUNE_3_MAX)
-                LCD_SERIAL_2.printf("main.va0.val=3");  
+                LCD_SERIAL_2.printf("main.va0.val=1");
                 LCD_SERIAL_2.printf("\xff\xff\xff");
-              #endif 
+              #elif ENABLED(NEPTUNE_3_MAX)
+                LCD_SERIAL_2.printf("main.va0.val=3");
+                LCD_SERIAL_2.printf("\xff\xff\xff");
+              #endif
             #endif
           }
         }
@@ -5416,7 +5416,7 @@
               queue.enqueue_now_P(PSTR("G1 F200 Z0.0"));
             #elif ENABLED(NEPTUNE_3_PRO)
               queue.enqueue_now_P(PSTR("G28 Z0"));
-              queue.enqueue_now_P(PSTR("G1 F200 Z0.0"));                
+              queue.enqueue_now_P(PSTR("G1 F200 Z0.0"));
             #elif ENABLED(NEPTUNE_3_MAX)
               queue.enqueue_now_P(PSTR("G28 Z0"));
               queue.enqueue_now_P(PSTR("G1 F200 Z0.0"));
@@ -5425,22 +5425,22 @@
             //waitway = 0;
           }
         }
-        else if(recdat.data[0] == 0x0E) //第2点 
+        else if(recdat.data[0] == 0x0E) //第2点
         {
           if (!planner.has_blocks_queued())
           {
             //waitway = 4;
 
             #if ENABLED(NEPTUNE_3_PLUS)
-              queue.enqueue_now_P(PSTR("G1 F600 Z3")); 
+              queue.enqueue_now_P(PSTR("G1 F600 Z3"));
               queue.enqueue_now_P(PSTR("G1 X37.5 Y32.5 F8000"));
               queue.enqueue_now_P(PSTR("G1 F200 Z0"));
             #elif ENABLED(NEPTUNE_3_PRO)
-              queue.enqueue_now_P(PSTR("G1 F600 Z3")); 
+              queue.enqueue_now_P(PSTR("G1 F600 Z3"));
               queue.enqueue_now_P(PSTR("G1 X37.5 Y215 F8000"));
-              queue.enqueue_now_P(PSTR("G1 F200 Z0")); 
+              queue.enqueue_now_P(PSTR("G1 F200 Z0"));
             #elif ENABLED(NEPTUNE_3_MAX)
-              queue.enqueue_now_P(PSTR("G1 F600 Z3")); 
+              queue.enqueue_now_P(PSTR("G1 F600 Z3"));
               queue.enqueue_now_P(PSTR("G1 X37.5 Y37.5 F8000"));
               queue.enqueue_now_P(PSTR("G1 F200 Z0"));
             #endif
@@ -5448,117 +5448,117 @@
             //waitway = 0;
           }
         }
-        else if(recdat.data[0] == 0x0F) //第3点  
+        else if(recdat.data[0] == 0x0F) //第3点
         {
           if (!planner.has_blocks_queued())
           {
             //waitway = 4;
 
             #if ENABLED(NEPTUNE_3_PLUS)
-              queue.enqueue_now_P(PSTR("G1 F600 Z3")); 
+              queue.enqueue_now_P(PSTR("G1 F600 Z3"));
               queue.enqueue_now_P(PSTR("G1 X37.5 Y165 F8000"));
               queue.enqueue_now_P(PSTR("G1 F200 Z0"));
             #elif ENABLED(NEPTUNE_3_PRO)
-              queue.enqueue_now_P(PSTR("G1 F600 Z3")); 
+              queue.enqueue_now_P(PSTR("G1 F600 Z3"));
               queue.enqueue_now_P(PSTR("G1 X37.5 Y37.5 F8000"));
               queue.enqueue_now_P(PSTR("G1 F200 Z0"));
             #elif ENABLED(NEPTUNE_3_MAX)
-              queue.enqueue_now_P(PSTR("G1 F600 Z3")); 
+              queue.enqueue_now_P(PSTR("G1 F600 Z3"));
               queue.enqueue_now_P(PSTR("G1 X37.5 Y215 F8000"));
               queue.enqueue_now_P(PSTR("G1 F200 Z0"));
-            #endif  
+            #endif
 
             //waitway = 0;
           }
         }
-        else if(recdat.data[0] == 0x10) //第4点 
+        else if(recdat.data[0] == 0x10) //第4点
         {
           if (!planner.has_blocks_queued())
           {
             //waitway = 4;
 
             #if ENABLED(NEPTUNE_3_PLUS)
-              queue.enqueue_now_P(PSTR("G1 F600 Z3")); 
+              queue.enqueue_now_P(PSTR("G1 F600 Z3"));
               queue.enqueue_now_P(PSTR("G1 X37.5 Y292.5 F8000"));
               queue.enqueue_now_P(PSTR("G1 F200 Z0"));
             #elif ENABLED(NEPTUNE_3_PRO)
-              queue.enqueue_now_P(PSTR("G1 F600 Z3")); 
+              queue.enqueue_now_P(PSTR("G1 F600 Z3"));
               queue.enqueue_now_P(PSTR("G1 X37.5 Y37.5 F8000"));
               queue.enqueue_now_P(PSTR("G1 F200 Z0"));
             #elif ENABLED(NEPTUNE_3_MAX)
-              queue.enqueue_now_P(PSTR("G1 F600 Z3")); 
+              queue.enqueue_now_P(PSTR("G1 F600 Z3"));
               queue.enqueue_now_P(PSTR("G1 X37.5 Y392.5 F8000"));
               queue.enqueue_now_P(PSTR("G1 F200 Z0"));
-            #endif  
+            #endif
 
             //waitway = 0;
           }
         }
-        else if(recdat.data[0] == 0x11) //第5点 
+        else if(recdat.data[0] == 0x11) //第5点
         {
           if (!planner.has_blocks_queued())
           {
             //waitway = 4;
 
             #if ENABLED(NEPTUNE_3_PLUS)
-              queue.enqueue_now_P(PSTR("G1 F600 Z3")); 
+              queue.enqueue_now_P(PSTR("G1 F600 Z3"));
               queue.enqueue_now_P(PSTR("G1 X292.5 Y297.5 F8000"));
               queue.enqueue_now_P(PSTR("G1 F200 Z0"));
             #elif ENABLED(NEPTUNE_3_PRO)
-              queue.enqueue_now_P(PSTR("G1 F600 Z3")); 
+              queue.enqueue_now_P(PSTR("G1 F600 Z3"));
               queue.enqueue_now_P(PSTR("G1 X37.5 Y165 F8000"));
               queue.enqueue_now_P(PSTR("G1 F200 Z0"));
             #elif ENABLED(NEPTUNE_3_MAX)
-              queue.enqueue_now_P(PSTR("G1 F600 Z3")); 
+              queue.enqueue_now_P(PSTR("G1 F600 Z3"));
               queue.enqueue_now_P(PSTR("G1 X392.5 Y392.5 F8000"));
               queue.enqueue_now_P(PSTR("G1 F200 Z0"));
-            #endif  
+            #endif
 
             //waitway = 0;
           }
         }
-        else if(recdat.data[0] == 0x12) //第6点  
+        else if(recdat.data[0] == 0x12) //第6点
         {
           if (!planner.has_blocks_queued())
           {
             //waitway = 4;
 
             #if ENABLED(NEPTUNE_3_PLUS)
-              queue.enqueue_now_P(PSTR("G1 F600 Z3")); 
+              queue.enqueue_now_P(PSTR("G1 F600 Z3"));
               queue.enqueue_now_P(PSTR("G1 X292.5 Y165 F8000"));
               queue.enqueue_now_P(PSTR("G1 F200 Z0"));
             #elif ENABLED(NEPTUNE_3_PRO)
-              queue.enqueue_now_P(PSTR("G1 F600 Z3")); 
+              queue.enqueue_now_P(PSTR("G1 F600 Z3"));
               queue.enqueue_now_P(PSTR("G1 X37.5 Y165 F8000"));
               queue.enqueue_now_P(PSTR("G1 F200 Z0"));
             #elif ENABLED(NEPTUNE_3_MAX)
-              queue.enqueue_now_P(PSTR("G1 F600 Z3")); 
+              queue.enqueue_now_P(PSTR("G1 F600 Z3"));
               queue.enqueue_now_P(PSTR("G1 X392.5 Y215 F8000"));
               queue.enqueue_now_P(PSTR("G1 F200 Z0"));
-            #endif  
+            #endif
 
             //waitway = 0;
           }
         }
-        else if(recdat.data[0] == 0x13) //第7点 
+        else if(recdat.data[0] == 0x13) //第7点
         {
           if (!planner.has_blocks_queued())
           {
             //waitway = 4;
 
             #if ENABLED(NEPTUNE_3_PLUS)
-              queue.enqueue_now_P(PSTR("G1 F600 Z3")); 
+              queue.enqueue_now_P(PSTR("G1 F600 Z3"));
               queue.enqueue_now_P(PSTR("G1 X292.5 Y32.5 F8000"));
               queue.enqueue_now_P(PSTR("G1 F200 Z0"));
             #elif ENABLED(NEPTUNE_3_PRO)
-              queue.enqueue_now_P(PSTR("G1 F600 Z3")); 
+              queue.enqueue_now_P(PSTR("G1 F600 Z3"));
               queue.enqueue_now_P(PSTR("G1 X37.5 Y165 F8000"));
               queue.enqueue_now_P(PSTR("G1 F200 Z0"));
             #elif ENABLED(NEPTUNE_3_MAX)
-              queue.enqueue_now_P(PSTR("G1 F600 Z3")); 
+              queue.enqueue_now_P(PSTR("G1 F600 Z3"));
               queue.enqueue_now_P(PSTR("G1 X392.5 Y37.5 F8000"));
               queue.enqueue_now_P(PSTR("G1 F200 Z0"));
-            #endif  
+            #endif
 
             //waitway = 0;
           }
@@ -5578,49 +5578,49 @@
           //暂停打印按钮激活功能
           memset(temp,0,sizeof(temp));
           sprintf(temp, "restFlag1=%d", restFlag1);
-          LCD_SERIAL_2.printf(temp); 
+          LCD_SERIAL_2.printf(temp);
           LCD_SERIAL_2.printf("\xff\xff\xff");
 
           memset(temp,0,sizeof(temp));
           sprintf(temp, "restFlag2=%d", restFlag2);
-          LCD_SERIAL_2.printf(temp); 
+          LCD_SERIAL_2.printf(temp);
           LCD_SERIAL_2.printf("\xff\xff\xff");
 
           //机型信息
           #if ENABLED(NEPTUNE_3_PLUS)
-            LCD_SERIAL_2.printf("main.va0.val=2");  
+            LCD_SERIAL_2.printf("main.va0.val=2");
             LCD_SERIAL_2.printf("\xff\xff\xff");
           #elif ENABLED(NEPTUNE_3_PRO)
-            LCD_SERIAL_2.printf("main.va0.val=1");  
-            LCD_SERIAL_2.printf("\xff\xff\xff");                  
-          #elif ENABLED(NEPTUNE_3_MAX)
-            LCD_SERIAL_2.printf("main.va0.val=3");  
+            LCD_SERIAL_2.printf("main.va0.val=1");
             LCD_SERIAL_2.printf("\xff\xff\xff");
-          #endif   
+          #elif ENABLED(NEPTUNE_3_MAX)
+            LCD_SERIAL_2.printf("main.va0.val=3");
+            LCD_SERIAL_2.printf("\xff\xff\xff");
+          #endif
 
           //打印文件名
           memset(temp,0,sizeof(temp));
           sprintf(temp, "printpause.t0.txt=\"%s\"", CardRecbuf.Cardshowfilename[CardRecbuf.recordcount]);
-          LCD_SERIAL_2.printf(temp); 
+          LCD_SERIAL_2.printf(temp);
           LCD_SERIAL_2.printf("\xff\xff\xff");
 
           //打印百分比
           Percentrecord = card.percentDone();
           if(Percentrecord <= 100)
           {
-            #if ENABLED(RTS_AVAILABLE) 
+            #if ENABLED(RTS_AVAILABLE)
               rtscheck.RTS_SndData((unsigned char)Percentrecord, PRINT_PROCESS_ICON_VP);
-              #if ENABLED(TJC_AVAILABLE)   
+              #if ENABLED(TJC_AVAILABLE)
                 memset(temp,0,sizeof(temp));
                 sprintf(temp, "printpause.printprocess.val=%d", Percentrecord);
-                LCD_SERIAL_2.printf(temp); 
+                LCD_SERIAL_2.printf(temp);
                 LCD_SERIAL_2.printf("\xff\xff\xff");
 
                 memset(temp,0,sizeof(temp));
                 sprintf(temp, "printpause.printvalue.txt=\"%d\"", Percentrecord);
-                LCD_SERIAL_2.printf(temp); 
-                LCD_SERIAL_2.printf("\xff\xff\xff");                
-              #endif  
+                LCD_SERIAL_2.printf(temp);
+                LCD_SERIAL_2.printf("\xff\xff\xff");
+              #endif
             #endif
           }
         }
@@ -5890,7 +5890,7 @@
         //999------记住挤出或退料前的旧值
         //planner.synchronize();
         const float olde = current_position.e;
-              
+
         //current_position.e += PRINT_FILAMENT_LENGTH;
         //line_to_current_position(MMM_TO_MMS(PRINT_FILAMENT_SPEED));
 
@@ -5899,9 +5899,9 @@
           if(printJobOngoing())
           {
             RTS_SndData(ExchangePageBase + 23, ExchangepageAddr);
-            #if ENABLED(TJC_AVAILABLE) 
+            #if ENABLED(TJC_AVAILABLE)
               LCD_SERIAL_2.printf("page warn1_filament");
-              LCD_SERIAL_2.printf("\xff\xff\xff");               
+              LCD_SERIAL_2.printf("\xff\xff\xff");
             #endif
             //222---
             //return;
@@ -5919,7 +5919,7 @@
               //       #if ENABLED(TJC_AVAILABLE)
               //         LCD_SERIAL_2.printf("page nofilament");
               //         LCD_SERIAL_2.printf("\xff\xff\xff");
-              //       #endif                     
+              //       #endif
               //     }
               //   #endif
               // }
@@ -5935,7 +5935,7 @@
                 #if ENABLED(TJC_AVAILABLE)
                   LCD_SERIAL_2.printf("page warn2_filament");
                   LCD_SERIAL_2.printf("\xff\xff\xff");
-                #endif  
+                #endif
               }
               else
               {
@@ -5951,9 +5951,9 @@
           if(printJobOngoing())
           {
             RTS_SndData(ExchangePageBase + 23, ExchangepageAddr);
-            #if ENABLED(TJC_AVAILABLE) 
+            #if ENABLED(TJC_AVAILABLE)
               LCD_SERIAL_2.printf("page warn1_filament");
-              LCD_SERIAL_2.printf("\xff\xff\xff");               
+              LCD_SERIAL_2.printf("\xff\xff\xff");
             #endif
             //222---
             //return;
@@ -5971,7 +5971,7 @@
               //       #if ENABLED(TJC_AVAILABLE)
               //         LCD_SERIAL_2.printf("page nofilament");
               //         LCD_SERIAL_2.printf("\xff\xff\xff");
-              //       #endif      
+              //       #endif
               //     }
               //   #endif
               // }
@@ -5986,9 +5986,9 @@
                 #if ENABLED(TJC_AVAILABLE)
                   LCD_SERIAL_2.printf("page warn2_filament");
                   LCD_SERIAL_2.printf("\xff\xff\xff");
-                #endif 
+                #endif
                 //222---
-                 //return; 
+                 //return;
               }
               else
               {
@@ -6013,7 +6013,7 @@
             //         #if ENABLED(TJC_AVAILABLE)
             //           LCD_SERIAL_2.printf("page nofilament");
             //           LCD_SERIAL_2.printf("\xff\xff\xff");
-            //         #endif      
+            //         #endif
             //       }
             //     #endif
             //   #endif
@@ -6052,7 +6052,7 @@
             //         #if ENABLED(TJC_AVAILABLE)
             //           LCD_SERIAL_2.printf("page nofilament");
             //           LCD_SERIAL_2.printf("\xff\xff\xff");
-            //         #endif      
+            //         #endif
             //       }
             //     #endif
             //   #endif
@@ -6088,7 +6088,7 @@
             #if ENABLED(TJC_AVAILABLE)
               LCD_SERIAL_2.printf("page heatfilament");
               LCD_SERIAL_2.printf("\xff\xff\xff");
-            #endif 
+            #endif
             heatway = 1;
           }
         }
@@ -6105,7 +6105,7 @@
             #if ENABLED(TJC_AVAILABLE)
               LCD_SERIAL_2.printf("page prefilament");
               LCD_SERIAL_2.printf("\xff\xff\xff");
-            #endif 
+            #endif
             heatway = 1;
           }
         }
@@ -6122,7 +6122,7 @@
             #if ENABLED(TJC_AVAILABLE)
               LCD_SERIAL_2.printf("page heatfilament");
               LCD_SERIAL_2.printf("\xff\xff\xff");
-            #endif 
+            #endif
             heatway = 2;
           }
         }
@@ -6141,10 +6141,10 @@
         else if(recdat.data[0] == 9)
         {
             RTS_SndData(ExchangePageBase + 40, ExchangepageAddr);
-            
-            #if ENABLED(TJC_AVAILABLE) 
+
+            #if ENABLED(TJC_AVAILABLE)
               LCD_SERIAL_2.printf("page wait");
-              LCD_SERIAL_2.printf("\xff\xff\xff");               
+              LCD_SERIAL_2.printf("\xff\xff\xff");
             #endif
 
             //reject to receive cmd
@@ -6159,15 +6159,15 @@
             pause_action_flag = true;
             Update_Time_Value = 0;
             planner.synchronize();
-            sdcard_pause_check = false;          
+            sdcard_pause_check = false;
         }
         else if(recdat.data[0] == 0x0A)
         {
           if(!planner.has_blocks_queued())
           {
-            #if ENABLED(TJC_AVAILABLE) 
+            #if ENABLED(TJC_AVAILABLE)
               LCD_SERIAL_2.printf("page main");
-              LCD_SERIAL_2.printf("\xff\xff\xff");           
+              LCD_SERIAL_2.printf("\xff\xff\xff");
             #endif
           }
         }
@@ -6178,8 +6178,8 @@
             sprintf(temp, "motorsetvalue.motorvalue.val=%d",(int)(planner.settings.axis_steps_per_mm[E_AXIS_N(0)]));
             LCD_SERIAL_2.printf(temp);
             LCD_SERIAL_2.printf("\xff\xff\xff");
-            unit = 10;   //默认调整单位            
-          #endif         
+            unit = 10;   //默认调整单位
+          #endif
         }
         else if(recdat.data[0] == 0x0C)
         {
@@ -6188,8 +6188,8 @@
             memset(temp,0,sizeof(temp));
             sprintf(temp, "motorsetvalue.motorvalue.val=%d",(int)(planner.settings.axis_steps_per_mm[E_AXIS_N(0)]));
             LCD_SERIAL_2.printf(temp);
-            LCD_SERIAL_2.printf("\xff\xff\xff");               
-          #endif  
+            LCD_SERIAL_2.printf("\xff\xff\xff");
+          #endif
         }
         else if(recdat.data[0] == 0x0D)
         {
@@ -6202,8 +6202,8 @@
             memset(temp,0,sizeof(temp));
             sprintf(temp, "motorsetvalue.motorvalue.val=%d",(int)(planner.settings.axis_steps_per_mm[E_AXIS_N(0)]));
             LCD_SERIAL_2.printf(temp);
-            LCD_SERIAL_2.printf("\xff\xff\xff");               
-          #endif  
+            LCD_SERIAL_2.printf("\xff\xff\xff");
+          #endif
         }
         else if(recdat.data[0] == 0x0E)
         {
@@ -6227,7 +6227,7 @@
             planner.quick_stop();
             planner.synchronize();
           }
-        }        
+        }
         else if(recdat.data[0] == 0xF1)
         {
           if(!planner.has_blocks_queued())
@@ -6275,7 +6275,7 @@
                   #if ENABLED(TJC_AVAILABLE)
                       LCD_SERIAL_2.printf("page nofilament");
                       LCD_SERIAL_2.printf("\xff\xff\xff");
-                  #endif      
+                  #endif
                 }
                 else if((0 == READ(CHECKFILEMENT1_PIN)) && (active_extruder == 1))
                 {
@@ -6283,7 +6283,7 @@
                   #if ENABLED(TJC_AVAILABLE)
                       LCD_SERIAL_2.printf("page nofilament");
                       LCD_SERIAL_2.printf("\xff\xff\xff");
-                  #endif 
+                  #endif
                 }
               #else
                 if(0 == READ(CHECKFILEMENT0_PIN))
@@ -6292,7 +6292,7 @@
                   #if ENABLED(TJC_AVAILABLE)
                       LCD_SERIAL_2.printf("page nofilament");
                       LCD_SERIAL_2.printf("\xff\xff\xff");
-                  #endif 
+                  #endif
                 }
               #endif
                 else
@@ -6341,7 +6341,7 @@
             {
               power_off_type_yes = 1;
               Update_Time_Value  = 0;
-              
+
               RTS_SndData(ExchangePageBase + 10, ExchangepageAddr);
               #if ENABLED(TJC_AVAILABLE)
                 restFlag2 = 0;
@@ -6355,7 +6355,7 @@
               PoweroffContinue = true;
               sdcard_pause_check = true;
               zprobe_zoffset = probe.offset.z;
-              
+
               recovery.resume();
 
               //PoweroffContinue   = true;
@@ -6363,7 +6363,7 @@
               //zprobe_zoffset = probe.offset.z;
 
               RTS_SndData(zprobe_zoffset * 100, AUTO_BED_LEVEL_ZOFFSET_VP);
-              #if ENABLED(TJC_AVAILABLE) 
+              #if ENABLED(TJC_AVAILABLE)
                 memset(temp,0,sizeof(temp));
                 sprintf(temp, "leveldata.z_offset.val=%d",(int)(zprobe_zoffset * 100));
                 LCD_SERIAL_2.printf(temp);
@@ -6382,9 +6382,9 @@
             active_extruder = 0;
           #endif
           RTS_SndData(ExchangePageBase + 1, ExchangepageAddr);
-          #if ENABLED(TJC_AVAILABLE) 
+          #if ENABLED(TJC_AVAILABLE)
             LCD_SERIAL_2.printf("page main");
-            LCD_SERIAL_2.printf("\xff\xff\xff");             
+            LCD_SERIAL_2.printf("\xff\xff\xff");
           #endif
           RTS_SndData(0, PRINT_TIME_HOUR_VP);
           RTS_SndData(0, PRINT_TIME_MIN_VP);
@@ -6399,18 +6399,18 @@
             #if ENABLED(TJC_AVAILABLE)
               #if ENABLED(POWER_LOSS_RECOVERY)
                 if(recovery.enabled==0)
-                { 
+                {
                   recovery.enable(true);
                   LCD_SERIAL_2.printf("multiset.plrbutton.val=1");
-                  LCD_SERIAL_2.printf("\xff\xff\xff"); 
+                  LCD_SERIAL_2.printf("\xff\xff\xff");
                 }
                 else if(recovery.enabled==1)
                 {
                   recovery.enable(false);
                   LCD_SERIAL_2.printf("multiset.plrbutton.val=0");
-                  LCD_SERIAL_2.printf("\xff\xff\xff"); 
+                  LCD_SERIAL_2.printf("\xff\xff\xff");
                 }
-              #endif              
+              #endif
             #endif
           #endif
         }
@@ -6436,27 +6436,27 @@
           }
 
           //清标题
-          #if ENABLED(TJC_AVAILABLE) 
+          #if ENABLED(TJC_AVAILABLE)
             LCD_SERIAL_2.printf("askprint.t0.txt=\"\"");
             LCD_SERIAL_2.printf("\xff\xff\xff");
 
             LCD_SERIAL_2.printf("printpause.t0.txt=\"\"");
-            LCD_SERIAL_2.printf("\xff\xff\xff"); 
-          #endif          
+            LCD_SERIAL_2.printf("\xff\xff\xff");
+          #endif
 
           RTS_SndData(CardRecbuf.Cardshowfilename[CardRecbuf.recordcount], SELECT_FILE_TEXT_VP);
 
           #if ENABLED(TJC_AVAILABLE)
             memset(temp,0,sizeof(temp));
             sprintf(temp, "askprint.t0.txt=\"%s\"", CardRecbuf.Cardshowfilename[CardRecbuf.recordcount]);
-            LCD_SERIAL_2.printf(temp); 
+            LCD_SERIAL_2.printf(temp);
             LCD_SERIAL_2.printf("\xff\xff\xff");
 
             memset(temp,0,sizeof(temp));
             sprintf(temp, "printpause.t0.txt=\"%s\"", CardRecbuf.Cardshowfilename[CardRecbuf.recordcount]);
-            LCD_SERIAL_2.printf(temp); 
-            LCD_SERIAL_2.printf("\xff\xff\xff");  
-          #endif  
+            LCD_SERIAL_2.printf(temp);
+            LCD_SERIAL_2.printf("\xff\xff\xff");
+          #endif
 
           delay(2);
           for(int j = 1;j <= CardRecbuf.Filesum;j ++)
@@ -6468,8 +6468,8 @@
           RTS_SndData(ExchangePageBase + 28, ExchangepageAddr);
 
           #if ENABLED(TJC_AVAILABLE)
-            LCD_SERIAL_2.printf("page askprint"); 
-            LCD_SERIAL_2.printf("\xff\xff\xff");  
+            LCD_SERIAL_2.printf("page askprint");
+            LCD_SERIAL_2.printf("\xff\xff\xff");
           #endif
         }
       }
@@ -6494,7 +6494,7 @@
               LCD_SERIAL_2.printf("\xff\xff\xff");
             #endif
             break;
-          }  
+          }
 
           if(CardRecbuf.recordcount < 0)
           {
@@ -6502,11 +6502,11 @@
           }
 
           //打印文件颜色显示
-          #if ENABLED(TJC_AVAILABLE) 
+          #if ENABLED(TJC_AVAILABLE)
             memset(temp,0,sizeof(temp));
             sprintf(temp, "file%d.t%d.pco=65504", (CardRecbuf.recordcount/5) + 1 , CardRecbuf.recordcount);
             LCD_SERIAL_2.printf(temp);
-            LCD_SERIAL_2.printf("\xff\xff\xff");           
+            LCD_SERIAL_2.printf("\xff\xff\xff");
           #endif
 
           char cmd[30];
@@ -6568,12 +6568,12 @@
                   {
                     RTS_SndData(ExchangePageBase + 39, ExchangepageAddr);
                     #if ENABLED(TJC_AVAILABLE)
-                      LCD_SERIAL_2.printf("page nofilament"); 
-                      LCD_SERIAL_2.printf("\xff\xff\xff");  
-                    #endif                    
+                      LCD_SERIAL_2.printf("page nofilament");
+                      LCD_SERIAL_2.printf("\xff\xff\xff");
+                    #endif
                     sdcard_pause_check = false;
                     break;
-                  }                  
+                  }
                 }
               #endif
             #endif
@@ -6591,11 +6591,11 @@
 
           #if ENABLED(BABYSTEPPING)
             RTS_SndData(0, AUTO_BED_LEVEL_ZOFFSET_VP);
-            #if ENABLED(TJC_AVAILABLE) 
+            #if ENABLED(TJC_AVAILABLE)
               memset(temp,0,sizeof(temp));
               sprintf(temp, "leveldata.z_offset.val=%d", 0);
               LCD_SERIAL_2.printf(temp);
-              LCD_SERIAL_2.printf("\xff\xff\xff");           
+              LCD_SERIAL_2.printf("\xff\xff\xff");
             #endif
           #endif
 
@@ -6605,23 +6605,23 @@
           RTS_SndData(zprobe_zoffset * 100, AUTO_BED_LEVEL_ZOFFSET_VP);
 
           #if ENABLED(TJC_AVAILABLE)
-            LCD_SERIAL_2.printf("printpause.printvalue.txt=\"0\""); 
+            LCD_SERIAL_2.printf("printpause.printvalue.txt=\"0\"");
             LCD_SERIAL_2.printf("\xff\xff\xff");
 
-            LCD_SERIAL_2.printf("printpause.printprocess.val=0"); 
-            LCD_SERIAL_2.printf("\xff\xff\xff");  
+            LCD_SERIAL_2.printf("printpause.printprocess.val=0");
+            LCD_SERIAL_2.printf("\xff\xff\xff");
 
             memset(temp,0,sizeof(temp));
             sprintf(temp, "leveldata.z_offset.val=%d", (int)(zprobe_zoffset * 100));
             LCD_SERIAL_2.printf(temp);
-            LCD_SERIAL_2.printf("\xff\xff\xff");           
+            LCD_SERIAL_2.printf("\xff\xff\xff");
           #endif
 
           PoweroffContinue = true;
 
           //切换正在打印页面
           RTS_SndData(ExchangePageBase + 10, ExchangepageAddr);
-          #if ENABLED(TJC_AVAILABLE) 
+          #if ENABLED(TJC_AVAILABLE)
             LCD_SERIAL_2.printf("page printpause");
             LCD_SERIAL_2.printf("\xff\xff\xff");
 
@@ -6639,7 +6639,7 @@
             LCD_SERIAL_2.printf("\xff\xff\xff");
 
             LCD_SERIAL_2.printf("printpause.cp0.aph=0");
-            LCD_SERIAL_2.printf("\xff\xff\xff");          
+            LCD_SERIAL_2.printf("\xff\xff\xff");
 
             LCD_SERIAL_2.printf("printpause.va0.txt=\"\"");
             LCD_SERIAL_2.printf("\xff\xff\xff");
@@ -6666,7 +6666,7 @@
 
                 memset(public_buf,0,sizeof(public_buf));
                 int16_t byte = file.read(public_buf, 512);
-                
+
                 LCD_SERIAL_2.printf("printpause.va0.txt=");
                 LCD_SERIAL_2.write(0x22);
                 LCD_SERIAL_2.write(public_buf,sizeof(public_buf));
@@ -6675,8 +6675,8 @@
 
                 LCD_SERIAL_2.printf("printpause.va1.txt+=printpause.va0.txt");
                 LCD_SERIAL_2.printf("\xff\xff\xff");
-                      
-                if(byte<=0) 
+
+                if(byte<=0)
                 {
                   LCD_SERIAL_2.printf("printpause.cp0.aph=127");
                   LCD_SERIAL_2.printf("\xff\xff\xff");
@@ -6728,9 +6728,9 @@
                     LCD_SERIAL_2.printf("\xff\xff\xff");
                     break;
                   }
-                  
+
                   if(p1)
-                  { 
+                  {
                     cnt_pre = 0;
 
                     while(1)
@@ -6746,7 +6746,7 @@
                       //uint32_t *p2  = (uint32_t *)strstr((char *)public_buf, ";;gimage:");
                       uint32_t *p2  = (uint32_t *)strstr((char *)public_buf, ";;simage:");
                       uint32_t *p3  = (uint32_t *)strstr((char *)public_buf, ";00000");
-                      
+
                       //if(p2)
                       if(p2||p3)
                       {
@@ -6792,7 +6792,7 @@
                               LCD_SERIAL_2.write(0x22);
                               LCD_SERIAL_2.printf("\xff\xff\xff");
                               LCD_SERIAL_2.printf("printpause.va1.txt+=printpause.va0.txt");
-                              LCD_SERIAL_2.printf("\xff\xff\xff");                                     
+                              LCD_SERIAL_2.printf("\xff\xff\xff");
 
                               LCD_SERIAL_2.printf("printpause.cp0.aph=127");
                               LCD_SERIAL_2.printf("\xff\xff\xff");
@@ -6852,7 +6852,7 @@
 
           // if (!filelist.seek(CardRecbuf.recordcount)) return;
           // ExtUI::printFile(filelist.shortFilename());
-        
+
           Update_Time_Value = 0;
         }
         else if(recdat.data[0] == 2)
@@ -6894,7 +6894,7 @@
         else if(recdat.data[0] == 0x0A)
         {
           LCD_SERIAL_2.printf("page main");
-          LCD_SERIAL_2.printf("\xff\xff\xff");       
+          LCD_SERIAL_2.printf("\xff\xff\xff");
         }
       }
       break;
@@ -7126,11 +7126,11 @@
         rtscheck.RTS_SndData((unsigned char)card.percentDone(), PRINT_PROCESS_VP);
 
         RTS_SndData(zprobe_zoffset * 100, AUTO_BED_LEVEL_ZOFFSET_VP);
-        #if ENABLED(TJC_AVAILABLE) 
+        #if ENABLED(TJC_AVAILABLE)
           memset(temp,0,sizeof(temp));
           sprintf(temp, "leveldata.z_offset.val=%d", (int)(zprobe_zoffset * 100));
           LCD_SERIAL_2.printf(temp);
-          LCD_SERIAL_2.printf("\xff\xff\xff");           
+          LCD_SERIAL_2.printf("\xff\xff\xff");
         #endif
         RTS_SndData(feedrate_percentage, PRINT_SPEED_RATE_VP);
         #if HAS_HOTEND
@@ -7139,7 +7139,7 @@
         #if HAS_MULTI_HOTEND
            RTS_SndData(thermalManager.temp_hotend[1].target, HEAD1_SET_TEMP_VP);
         #endif
-       
+
         RTS_SndData(thermalManager.temp_bed.target, BED_SET_TEMP_VP);
 
         //RTS_SndData(change_page_number + ExchangePageBase, ExchangepageAddr);
@@ -7153,12 +7153,12 @@
           if(READ(X_MIN_PIN))
           {
             LCD_SERIAL_2.printf("x.bco=1024");
-            LCD_SERIAL_2.printf("\xff\xff\xff");             
+            LCD_SERIAL_2.printf("\xff\xff\xff");
           }
           else
           {
             LCD_SERIAL_2.printf("x.bco=50712");
-            LCD_SERIAL_2.printf("\xff\xff\xff");   
+            LCD_SERIAL_2.printf("\xff\xff\xff");
           }
         }
         else if (recdat.data[0] == 0x01) //Y限位
@@ -7166,12 +7166,12 @@
           if(READ(Y_MIN_PIN))
           {
             LCD_SERIAL_2.printf("y.bco=1024");
-            LCD_SERIAL_2.printf("\xff\xff\xff");             
+            LCD_SERIAL_2.printf("\xff\xff\xff");
           }
           else
           {
             LCD_SERIAL_2.printf("y.bco=50712");
-            LCD_SERIAL_2.printf("\xff\xff\xff");   
+            LCD_SERIAL_2.printf("\xff\xff\xff");
           }
         }
         else if (recdat.data[0] == 0x02) //Z限位
@@ -7179,12 +7179,12 @@
           if(READ(Z_MIN_PROBE_PIN))
           {
             LCD_SERIAL_2.printf("z.bco=1024");
-            LCD_SERIAL_2.printf("\xff\xff\xff");             
+            LCD_SERIAL_2.printf("\xff\xff\xff");
           }
           else
           {
             LCD_SERIAL_2.printf("z.bco=50712");
-            LCD_SERIAL_2.printf("\xff\xff\xff");   
+            LCD_SERIAL_2.printf("\xff\xff\xff");
           }
         }
         else if (recdat.data[0] == 0x03) //mtd状态
@@ -7192,12 +7192,12 @@
           if(READ(CHECKFILEMENT0_PIN))
           {
             LCD_SERIAL_2.printf("mtd.bco=1024");
-            LCD_SERIAL_2.printf("\xff\xff\xff");             
+            LCD_SERIAL_2.printf("\xff\xff\xff");
           }
           else
           {
             LCD_SERIAL_2.printf("mtd.bco=50712");
-            LCD_SERIAL_2.printf("\xff\xff\xff");   
+            LCD_SERIAL_2.printf("\xff\xff\xff");
           }
         }
         else if (recdat.data[0] == 0x04) //加热喷头
@@ -7205,14 +7205,14 @@
           thermalManager.temp_hotend[0].target = 260;
           thermalManager.setTargetHotend(thermalManager.temp_hotend[0].target, 0);
           LCD_SERIAL_2.printf("nozzle.bco=1024");
-          LCD_SERIAL_2.printf("\xff\xff\xff"); 
+          LCD_SERIAL_2.printf("\xff\xff\xff");
         }
         else if (recdat.data[0] == 0x05) //加热热床
         {
           thermalManager.temp_bed.target = 100;
           thermalManager.setTargetBed(thermalManager.temp_bed.target);
           LCD_SERIAL_2.printf("bed.bco=1024");
-          LCD_SERIAL_2.printf("\xff\xff\xff");    
+          LCD_SERIAL_2.printf("\xff\xff\xff");
         }
         else if (recdat.data[0] == 0x06) //开启模型散热风扇
         {
@@ -7220,12 +7220,12 @@
           LCD_SERIAL_2.printf("fan.bco=1024");
           LCD_SERIAL_2.printf("\xff\xff\xff");
           LCD_SERIAL_2.printf("set.va0.val=1");
-          LCD_SERIAL_2.printf("\xff\xff\xff"); 
-        }  
+          LCD_SERIAL_2.printf("\xff\xff\xff");
+        }
         else if (recdat.data[0] == 0x07) //开照明灯
         {
           status_led2 = true;
-          #if ENABLED(TJC_AVAILABLE) 
+          #if ENABLED(TJC_AVAILABLE)
             LCD_SERIAL_2.printf("status_led2=1");
             LCD_SERIAL_2.printf("\xff\xff\xff");
           #endif
@@ -7234,13 +7234,13 @@
           #if PIN_EXISTS(LED3)
             OUT_WRITE(LED3_PIN, HIGH);
           #endif
-        }  
+        }
         else if (recdat.data[0] == 0x08) //关喷头
         {
           thermalManager.temp_hotend[0].target = 0;
           thermalManager.setTargetHotend(thermalManager.temp_hotend[0].target, 0);
           LCD_SERIAL_2.printf("nozzle.bco=50712");
-          LCD_SERIAL_2.printf("\xff\xff\xff"); 
+          LCD_SERIAL_2.printf("\xff\xff\xff");
         }
         else if (recdat.data[0] == 0x09) //关热床
         {
@@ -7255,12 +7255,12 @@
           LCD_SERIAL_2.printf("fan.bco=50712");
           LCD_SERIAL_2.printf("\xff\xff\xff");
           LCD_SERIAL_2.printf("set.va0.val=0");
-          LCD_SERIAL_2.printf("\xff\xff\xff");   
+          LCD_SERIAL_2.printf("\xff\xff\xff");
         }
         else if (recdat.data[0] == 0x0B) //关照明灯
         {
           status_led2 = false;
-          #if ENABLED(TJC_AVAILABLE) 
+          #if ENABLED(TJC_AVAILABLE)
             LCD_SERIAL_2.printf("status_led2=0");
             LCD_SERIAL_2.printf("\xff\xff\xff");
           #endif
@@ -7295,7 +7295,7 @@
         {
 
         }
-        else if (recdat.data[0] == 0x0F) 
+        else if (recdat.data[0] == 0x0F)
         {
           const char *MKSTestPath = "MKS_TEST";
           SdFile dir, root = card.getroot();
@@ -7304,7 +7304,7 @@
             LCD_SERIAL_2.printf("page hardwaretest");
             LCD_SERIAL_2.printf("\xff\xff\xff");
           }
-        }                            
+        }
       }
       break;
 

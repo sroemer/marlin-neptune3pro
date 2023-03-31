@@ -15,7 +15,7 @@
       ]
     ],
     "mcu": "stm32f401rct6",
-    "variant": "MARLIN_MKS_E3"
+    "variant": "MARLIN_ZNP_ROBIN_NANO_DW_V2_2"
   },
   "debug": {
     "jlink_device": "STM32F401RC",
