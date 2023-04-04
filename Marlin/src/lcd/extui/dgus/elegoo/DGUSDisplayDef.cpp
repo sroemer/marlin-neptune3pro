@@ -924,16 +924,16 @@
       /***************transmit Printer information to screen*****************/
       char sizebuf[20] = {0};
       sprintf(sizebuf, "%d X %d X %d", X_MAX_POS - 2, Y_MAX_POS - 2, Z_MAX_POS);
-      RTS_SndData(MACVERSION, PRINTER_MACHINE_TEXT_VP);
-      RTS_SndData(SOFTVERSION, PRINTER_VERSION_TEXT_VP);
+      RTS_SndData(STRING_CONFIG_H_AUTHOR, PRINTER_MACHINE_TEXT_VP);
+      RTS_SndData(DETAILED_BUILD_VERSION, PRINTER_VERSION_TEXT_VP);
       RTS_SndData(sizebuf, PRINTER_PRINTSIZE_TEXT_VP);
-      RTS_SndData(CORP_WEBSITE, PRINTER_WEBSITE_TEXT_VP);
+      RTS_SndData(WEBSITE_URL, PRINTER_WEBSITE_TEXT_VP);
 
       #if ENABLED(TJC_AVAILABLE)
 
         //主板软件版本
         memset(temp,0,sizeof(temp));
-        sprintf(temp, "information.sversion.txt=\"%s\"",SOFTVERSION);
+        sprintf(temp, "information.sversion.txt=\"%s\"",DETAILED_BUILD_VERSION);
         LCD_SERIAL_2.printf(temp);
         LCD_SERIAL_2.printf("\xff\xff\xff");
 
@@ -4913,7 +4913,7 @@
         }
         else if (recdat.data[0] == 5)
         {
-          RTS_SndData(CORP_WEBSITE, PRINTER_WEBSITE_TEXT_VP);
+          RTS_SndData(WEBSITE_URL, PRINTER_WEBSITE_TEXT_VP);
           RTS_SndData(ExchangePageBase + 33, ExchangepageAddr);
         }
         else if (recdat.data[0] == 6)
@@ -7094,11 +7094,11 @@
 
         char sizeBuf[20];
         sprintf(sizeBuf, "%d X %d X %d", X_BED_SIZE, Y_BED_SIZE, Z_MAX_POS);
-        RTS_SndData(MACVERSION, PRINTER_MACHINE_TEXT_VP);
-        RTS_SndData(SOFTVERSION, PRINTER_VERSION_TEXT_VP);
+        RTS_SndData(STRING_CONFIG_H_AUTHOR, PRINTER_MACHINE_TEXT_VP);
+        RTS_SndData(DETAILED_BUILD_VERSION, PRINTER_VERSION_TEXT_VP);
         RTS_SndData(sizeBuf, PRINTER_PRINTSIZE_TEXT_VP);
 
-        RTS_SndData(CORP_WEBSITE, PRINTER_WEBSITE_TEXT_VP);
+        RTS_SndData(WEBSITE_URL, PRINTER_WEBSITE_TEXT_VP);
 
         if (thermalManager.fan_speed[0] == 0)
         {

@@ -382,18 +382,6 @@
   void RTS_MoveAxisHoming();
   void EachMomentUpdate();
 
-  #define MACVERSION              STRING_CONFIG_H_AUTHOR
-
-  #define CORP_WEBSITE            "www.elegoo.com"
-
-  #if NEPTUNE_3_PRO
-    #define SOFTVERSION             "0.1.0p"
-  #elif NEPTUNE_3_PLUS
-    #define SOFTVERSION             "0.1.0+"
-  #elif NEPTUNE_3_MAX
-    #define SOFTVERSION             "0.1.0m"
-  #endif
-
   #if ENABLED(SDSUPPORT)
     #include "../../../../sd/SdFile.h"
     #include "../../../../sd/cardreader.h"
