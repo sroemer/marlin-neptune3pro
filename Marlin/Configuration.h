@@ -670,13 +670,13 @@
   #if ENABLED(PID_PARAMS_PER_HOTEND)
     // Specify up to one value per hotend here, according to your setup.
     // If there are fewer values, the last one applies to the remaining hotends.
-    #define DEFAULT_Kp_LIST { 21.82, 21.82}
-    #define DEFAULT_Ki_LIST {  1.77,  1.77 }
-    #define DEFAULT_Kd_LIST { 67.21, 67.21 }
+    #define DEFAULT_Kp_LIST { 22.39, 22.39}
+    #define DEFAULT_Ki_LIST {  1.85,  1.85 }
+    #define DEFAULT_Kd_LIST { 67.63, 67.63 }
   #else
-    #define DEFAULT_Kp 21.82 // Custom values from 'M303 C10 E0 S205' autotune performed on 06/04/2023 on Neptune 3 Pro
-    #define DEFAULT_Ki  1.77
-    #define DEFAULT_Kd 67.21
+    #define DEFAULT_Kp 22.39 // Custom values from 'M303 C10 E0 S205' autotune performed on 07/04/2023 on Neptune 3 Pro
+    #define DEFAULT_Ki  1.85
+    #define DEFAULT_Kd 67.63
   #endif
 #endif
 
