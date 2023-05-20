@@ -626,7 +626,7 @@
 // Above this temperature the heater will be switched off.
 // This can protect components from overheating, but NOT from shorts and failures.
 // (Use MINTEMP for thermistor short/failure protection.)
-#define HEATER_0_MAXTEMP 315
+#define HEATER_0_MAXTEMP 275      //最高预热温度等于该值-15℃
 #define HEATER_1_MAXTEMP 275
 #define HEATER_2_MAXTEMP 275
 #define HEATER_3_MAXTEMP 275
@@ -634,7 +634,7 @@
 #define HEATER_5_MAXTEMP 275
 #define HEATER_6_MAXTEMP 275
 #define HEATER_7_MAXTEMP 275
-#define BED_MAXTEMP      150
+#define BED_MAXTEMP      125      //最高预热温度等于该值-15℃
 #define CHAMBER_MAXTEMP  60
 
 /**
@@ -1204,11 +1204,11 @@
  *                                      X, Y, Z [, I [, J [, K...]]], E0 [, E1[, E2...]]
  */
 #if NEPTUNE_3_PRO
-  #define DEFAULT_MAX_ACCELERATION      { 1100, 900, 100, 2000 }
+  #define DEFAULT_MAX_ACCELERATION      { 1100, 900, 100, 1000 }
 #elif NEPTUNE_3_PLUS
-  #define DEFAULT_MAX_ACCELERATION      { 700, 700, 100, 2000 }
+  #define DEFAULT_MAX_ACCELERATION      { 700, 700, 100, 1000 }
 #elif NEPTUNE_3_MAX
-  #define DEFAULT_MAX_ACCELERATION      { 700, 700, 100, 2000 }
+  #define DEFAULT_MAX_ACCELERATION      { 700, 700, 100, 1000 }
 #endif
 
 //#define LIMITED_MAX_ACCEL_EDITING     // Limit edit via M201 or LCD to DEFAULT_MAX_ACCELERATION * 2
@@ -1224,9 +1224,9 @@
  *   M204 R    Retract Acceleration
  *   M204 T    Travel Acceleration
  */
-#define DEFAULT_ACCELERATION          3000    // X, Y, Z and E acceleration for printing moves
-#define DEFAULT_RETRACT_ACCELERATION  3000    // E acceleration for retracts
-#define DEFAULT_TRAVEL_ACCELERATION   3000    // X, Y, Z acceleration for travel (non printing) moves
+#define DEFAULT_ACCELERATION          1000    // X, Y, Z and E acceleration for printing moves
+#define DEFAULT_RETRACT_ACCELERATION  1000    // E acceleration for retracts
+#define DEFAULT_TRAVEL_ACCELERATION   1000    // X, Y, Z acceleration for travel (non printing) moves
 
 /**
  * Default Jerk limits (mm/s)
@@ -2120,7 +2120,7 @@
  * Useful to retract or move the Z probe out of the way.
  */
 //#define Z_PROBE_END_SCRIPT "G1 Z10 F12000\nG1 X15 Y330\nG1 Z0.5\nG1 Z10"
-#define Z_PROBE_END_SCRIPT "G28 Z\nG1 F200 Z0.1"
+#define Z_PROBE_END_SCRIPT "M500\nG28 Z\nG1 F200 Z0.1"
 
 // @section homing
 

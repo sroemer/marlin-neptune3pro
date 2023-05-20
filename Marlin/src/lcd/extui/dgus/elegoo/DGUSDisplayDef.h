@@ -28,10 +28,10 @@
   #define FHONE   (0x5A)
   #define FHTWO   (0xA5)
   #define FHLENG  (0x06)
-  //#define TEXTBYTELEN     20
+
   #define TEXTBYTELEN    40
-  //#define MaxFileNumber   20
-  #define MaxFileNumber   25
+  //#define MaxFileNumber       25
+  #define MaxFileNumber       80
 
   #define FileNum             MaxFileNumber
   #define FileNameLen         TEXTBYTELEN
@@ -189,7 +189,7 @@
 
   extern celsius_t pla_extrusion_temp;
   extern celsius_t pla_bed_temp;
-
+    
   extern celsius_t petg_extrusion_temp;
   extern celsius_t petg_bed_temp;
 
@@ -206,12 +206,12 @@
   extern bool abortSD_flag;
   extern bool RTS_M600_Flag;
   extern bool Home_stop_flag;
-  extern bool Move_finish_flag;
+  extern bool Move_finish_flag; 
 
   extern uint8_t restFlag1;
   extern uint8_t restFlag2;
 
-  #define PIC_TXT_GOCDE
+  #define PIC_TXT_GOCDE     
 
   /************struct**************/
   typedef struct DataBuf
@@ -315,10 +315,12 @@
     SetPreNozzleTemp,
     SetPreBedTemp,
     HardwareTest,
-    Err_Control
+    Err_Control,
+    PrintFiles,
+    PrintConfirm
   };
 
-  const unsigned long Addrbuf[] =
+  const unsigned long Addrbuf[] = 
   {
     0x1002, //MainPageKey
     0x1004, //AdjustmentKey
@@ -357,14 +359,16 @@
     0x2200, //SetPreNozzleTemp
     0x2201, //SetPreBedTemp
     0x2202, //HardwareTest
-    0X2203, //Err_Control
+    0x2203, //Err_Control
+    0x2204, //Printfiles
+    0x2205, //PrintConfirm
     0
   };
 
   extern void RTSUpdate();
   extern void RTSInit();
 
-  extern void RTS_reset_settings(void);
+  extern void RTS_reset_settings(void); 
 
   // extern uint8_t active_extruder_font;
   // extern uint8_t dualXPrintingModeStatus;
@@ -386,6 +390,8 @@
     #include "../../../../sd/SdFile.h"
     #include "../../../../sd/cardreader.h"
   #endif
+
+  void RTS_Pause_Api(void);
 
   class MediaFileReader {
     private:
